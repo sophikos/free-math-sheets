@@ -20,7 +20,7 @@
     "jspdf": "^2.5.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "rescript": "^11.1.4"
+    "rescript": "^12.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.4.1",

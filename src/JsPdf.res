@@ -3,7 +3,7 @@
 type t
 
 type orientation = [#portrait | #landscape]
-type unit_ = [#mm | @as("in") #inches | #px | #pt]
+type unit_ = [#mm | #\"in" | #px | #pt]
 type format = [#a4 | #letter]
 
 type options = {

@@ -1890,7 +1890,7 @@ let generateFourthGradeProblem = (op: FourthGrade.operation, config: skillConfig
           let _ = factors->Array.push(i)
         }
       }
-      let factorStr = factors->Array.map(n => Int.toString(n))->Js.Array2.joinWith(", ")
+      let factorStr = factors->Array.map(n => Int.toString(n))->Array.joinUnsafe(", ")
       {
         topNumber: "",
         operator: "",
