@@ -1,4 +1,4 @@
-.PHONY: build up down
+.PHONY: build up down dev
 
 build:
 	docker compose build
