@@ -3,8 +3,3 @@ services:
     build: .
     ports:
       - "9343:80"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
