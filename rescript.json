@@ -1,5 +1,5 @@
 {
-  "name": "worksheet-generator",
+  "name": "free-math-sheets",
   "sources": [
     {
       "dir": "src",
@@ -13,11 +13,11 @@
       "in-source": false
     }
   ],
-  "bs-dependencies": [
+  "dependencies": [
     "@rescript/core",
     "@rescript/react"
   ],
-  "bsc-flags": [
+  "compiler-flags": [
     "-bs-no-version-header",
     "-open RescriptCore"
   ],
