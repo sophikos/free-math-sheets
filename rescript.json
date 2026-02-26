@@ -1,0 +1,28 @@
+{
+  "name": "worksheet-generator",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "jsx": { "version": 4 },
+  "package-specs": [
+    {
+      "module": "esmodule",
+      "in-source": false
+    }
+  ],
+  "bs-dependencies": [
+    "@rescript/core",
+    "@rescript/react"
+  ],
+  "bsc-flags": [
+    "-bs-no-version-header",
+    "-open RescriptCore"
+  ],
+  "warnings": {
+    "number": "+A-48-42-41-40-4-9-102-33",
+    "error": "+A"
+  }
+}

@@ -1,0 +1,964 @@
+/* Worksheet Generator - Overleaf-inspired design */
+
+/* CSS Variables - Custom color palette */
+:root {
+  /* Primary colors - Deep teal/slate */
+  --color-header-bg: #1e293b;
+  --color-sidebar-bg: #334155;
+  --color-sidebar-hover: #475569;
+  --color-sidebar-active: #0f172a;
+
+  /* Preview/content area */
+  --color-preview-bg: #f8fafc;
+  --color-preview-paper: #ffffff;
+
+  /* Accent colors */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-success: #22c55e;
+  --color-success-hover: #16a34a;
+
+  /* Text colors */
+  --color-text-light: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-text-dark: #1e293b;
+  --color-text-secondary: #64748b;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-dark: #475569;
+
+  /* Spacing */
+  --header-height: 56px;
+  --sidebar-width: 320px;
+}
+
+/* Reset and base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  line-height: 1.5;
+  color: var(--color-text-dark);
+  background-color: var(--color-preview-bg);
+}
+
+/* App Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header / Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  background-color: var(--color-header-bg);
+  padding: 0 1rem;
+  flex-shrink: 0;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toolbar-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+.toolbar-logo-link:hover {
+  opacity: 0.8;
+}
+
+.toolbar-logo-img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.toolbar-logo-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.toolbar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.toolbar-by {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--color-border-dark);
+}
+
+.toolbar-document-title {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.toolbar-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Toolbar buttons */
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.toolbar-btn-primary {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.toolbar-btn-primary:hover:not(:disabled) {
+  background-color: var(--color-success-hover);
+}
+
+.toolbar-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toolbar-btn-secondary {
+  background-color: transparent;
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border-dark);
+}
+
+.toolbar-btn-secondary:hover {
+  background-color: var(--color-sidebar-hover);
+}
+
+.toolbar-btn-icon {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  padding: 0.5rem;
+}
+
+.toolbar-btn-icon:hover {
+  color: var(--color-text-light);
+  background-color: var(--color-sidebar-hover);
+}
+
+/* Main content area - split pane */
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar / Configuration Panel */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--color-sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-sidebar-active);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.sidebar-header-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Form elements in sidebar */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  background-color: var(--color-sidebar-active);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 4px;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-select {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  background-color: var(--color-sidebar-active);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 4px;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.form-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+/* Generate button in sidebar */
+.sidebar-generate-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  background-color: var(--color-success);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.sidebar-generate-btn:hover:not(:disabled) {
+  background-color: var(--color-success-hover);
+}
+
+.sidebar-generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Skill selector in sidebar */
+.skill-category {
+  margin-bottom: 0.5rem;
+}
+
+.skill-category-btn {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-sidebar-active);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 4px;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.skill-category-btn:hover {
+  background-color: var(--color-sidebar-hover);
+}
+
+.skill-category-icon {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.skill-list {
+  padding: 0.5rem 0 0.5rem 0.75rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.skill-btn {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.skill-btn:hover {
+  background-color: var(--color-sidebar-hover);
+  color: var(--color-text-light);
+}
+
+.skill-btn.selected {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Resize handle */
+.resize-handle {
+  width: 4px;
+  background-color: var(--color-sidebar-active);
+  cursor: col-resize;
+  transition: background-color 0.15s ease;
+}
+
+.resize-handle:hover {
+  background-color: var(--color-primary);
+}
+
+/* Preview Panel */
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-preview-bg);
+  overflow: hidden;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-preview-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.preview-header-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.preview-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background-color: white;
+  color: var(--color-text-dark);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preview-btn:hover {
+  background-color: var(--color-preview-bg);
+  border-color: var(--color-text-secondary);
+}
+
+.preview-btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.preview-btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* Preview content area */
+.preview-content {
+  flex: 1;
+  overflow: hidden;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.pdf-preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.preview-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.preview-empty-text {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-empty-hint {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Worksheet paper preview */
+.worksheet-paper {
+  width: 100%;
+  max-width: 8.5in;
+  min-height: 11in;
+  background-color: var(--color-preview-paper);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1in 0.75in;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.worksheet-paper:last-child {
+  margin-bottom: 0;
+}
+
+.worksheet-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-text-dark);
+}
+
+.worksheet-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-text-dark);
+}
+
+.worksheet-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.worksheet-meta-field {
+  border-bottom: 1px solid var(--color-text-dark);
+  min-width: 150px;
+}
+
+/* Continuation header for subsequent pages */
+.worksheet-header-continuation {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-text-dark);
+}
+
+.worksheet-title-small {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* Page number */
+.worksheet-page-number {
+  position: absolute;
+  bottom: 0.5in;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Problems grid */
+/* Problems list - 2 column grid like the PDF */
+.problems-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+  padding: 1rem 0;
+}
+
+/* Each problem item */
+.problem-item {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  min-height: 80px;
+}
+
+.problem-item-horizontal {
+  align-items: flex-start;
+}
+
+.problem-number {
+  font-weight: bold;
+  font-family: 'Times New Roman', serif;
+  font-size: 0.875rem;
+  min-width: 1.5rem;
+}
+
+.problem-content-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+}
+
+.problem-operand {
+  text-align: right;
+}
+
+.problem-operator-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.problem-operator {
+  margin-right: 0.25rem;
+}
+
+.problem-answer-line {
+  border-top: 2px solid var(--color-text-dark);
+  width: 100%;
+  min-width: 60px;
+  margin-top: 0.25rem;
+  height: 1.5rem;
+}
+
+.problem-content-horizontal {
+  font-family: 'Times New Roman', serif;
+  font-size: 1rem;
+}
+
+/* Answer key */
+.answer-key {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--color-text-dark);
+}
+
+.answer-key-title {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.answer-key-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.answer-key-item {
+  color: var(--color-text-secondary);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-header-bg);
+  border-top: 1px solid var(--color-border-dark);
+  flex-shrink: 0;
+}
+
+.footer-promo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.footer-promo:hover {
+  background-color: var(--color-sidebar-hover);
+}
+
+.footer-logo {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.footer-promo-text {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.footer-promo-tagline {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Print styles */
+@media print {
+  .toolbar,
+  .sidebar,
+  .resize-handle,
+  .preview-header,
+  .footer {
+    display: none !important;
+  }
+
+  .app,
+  .main-content,
+  .preview-panel,
+  .preview-content {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .worksheet-paper {
+    box-shadow: none !important;
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0.5in !important;
+  }
+}
+
+/* Mobile tabs - hidden on desktop */
+.mobile-tabs {
+  display: none;
+}
+
+/* Mobile preview actions - hidden on desktop */
+.mobile-preview-actions {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 100%;
+  }
+
+  /* Mobile tabs */
+  .mobile-tabs {
+    display: flex;
+    background-color: var(--color-sidebar-bg);
+    border-bottom: 1px solid var(--color-border-dark);
+  }
+
+  .mobile-tab {
+    flex: 1;
+    padding: 0.75rem;
+    min-height: 44px;
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .mobile-tab:hover {
+    color: var(--color-text-light);
+  }
+
+  .mobile-tab.active {
+    color: var(--color-text-light);
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  /* Layout changes */
+  .main-content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex: 1;
+    max-height: none;
+  }
+
+  .resize-handle {
+    display: none;
+  }
+
+  .preview-panel {
+    flex: 1;
+  }
+
+  /* Touch targets (44px minimum) */
+  .toolbar-btn {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+
+  .form-input,
+  .form-select {
+    min-height: 44px;
+    font-size: 1rem; /* Prevents iOS zoom on focus */
+  }
+
+  .form-checkbox {
+    width: 24px;
+    height: 24px;
+  }
+
+  .form-checkbox-label {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-generate-btn {
+    min-height: 48px;
+  }
+
+  .skill-category-btn {
+    min-height: 44px;
+  }
+
+  .skill-btn {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Problems grid - single column on mobile */
+  .problems-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Worksheet paper */
+  .worksheet-paper {
+    padding: 0.5in 0.5rem;
+    max-width: 100%;
+  }
+
+  /* Toolbar/Footer */
+  .toolbar-divider,
+  .toolbar-document-title {
+    display: none;
+  }
+
+  .footer-promo-tagline {
+    display: none;
+  }
+
+  .toolbar-left {
+    gap: 0.5rem;
+  }
+
+  .toolbar-right {
+    gap: 0.25rem;
+  }
+
+  .toolbar-btn-secondary {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  /* Mobile preview actions */
+  .mobile-preview-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: var(--color-preview-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mobile-preview-btn {
+    flex: 1;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .mobile-preview-btn:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  /* Hide toolbar PDF buttons on mobile (using mobile-preview-actions instead) */
+  .toolbar-right .toolbar-btn-secondary {
+    display: none;
+  }
+
+  /* Safe area insets for notched devices */
+  .toolbar {
+    padding-top: max(0, env(safe-area-inset-top));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .footer {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .sidebar-content {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .mobile-tabs {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .mobile-preview-actions {
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+  }
+}
+
+/* Very small screens (phones in portrait) */
+@media (max-width: 480px) {
+  /* Smaller worksheet title */
+  .worksheet-title {
+    font-size: 1.25rem;
+  }
+
+  .worksheet-title-small {
+    font-size: 0.875rem;
+  }
+
+  /* Stack worksheet meta fields vertically */
+  .worksheet-meta {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .worksheet-meta-field {
+    min-width: auto;
+    width: 100%;
+  }
+
+  /* Tighter problem item padding */
+  .problem-item {
+    padding: 0.5rem;
+    min-height: 60px;
+  }
+
+  /* Smaller problem font */
+  .problem-content-vertical {
+    font-size: 1rem;
+  }
+
+  /* Answer key - fewer columns */
+  .answer-key-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Smaller toolbar title */
+  .toolbar-title {
+    font-size: 0.875rem;
+  }
+
+  /* Tighter worksheet paper padding */
+  .worksheet-paper {
+    padding: 0.375in 0.375rem;
+  }
+}

@@ -1,0 +1,7 @@
+# Free Math Sheets - robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.freemathsheets.com/sitemap.xml

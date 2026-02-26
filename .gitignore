@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-*
+lib/
+src/**/*.res.mjs
+.DS_Store
+CLAUDE.md
