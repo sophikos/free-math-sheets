@@ -292,34 +292,40 @@
        d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path10"
        inkscape:path-effect="#path-effect10"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927" />
+       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       inkscape:label="dash-3" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       d="m 246.98401,24.544995 c 0,7.168365 0,14.336729 0,22.262717 0,7.925988 0,16.609599 0,25.29321"
        id="path11"
        inkscape:path-effect="#path-effect12"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
-       transform="rotate(25,265.6695,345.46222)" />
+       inkscape:original-d="m 246.98401,24.544995 c 0,7.168365 0,14.336729 0,21.505094 0,8.683611 0,17.367222 0,26.050833"
+       transform="rotate(35,279.02234,260.20944)"
+       inkscape:label="dash-2"
+       sodipodi:nodetypes="ccc" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path12"
        inkscape:path-effect="#path-effect14"
        inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
-       transform="rotate(-25,236.34414,292.79738)" />
+       transform="rotate(-35,224.01843,222.95173)"
+       inkscape:label="dash-4" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path14"
        inkscape:path-effect="#path-effect16"
        inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
-       transform="rotate(50,225.41856,302.69335)" />
+       transform="rotate(60,247.56422,264.09662)"
+       inkscape:label="dash-1" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path16"
        inkscape:path-effect="#path-effect18"
        inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
-       transform="rotate(-50,276.33061,290.30116)" />
+       transform="rotate(-60,253.86858,254.23536)"
+       inkscape:label="dash-5" />
   </g>
 </svg>
