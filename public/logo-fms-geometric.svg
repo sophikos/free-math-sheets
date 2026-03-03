@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- F from rectangles and squares -->
+  <g transform="translate(20, 20)">
+    <!-- Vertical bar -->
+    <rect x="0" y="0" width="16" height="120" rx="2" fill="url(#grad1)" />
+    <!-- Top horizontal bar -->
+    <rect x="16" y="0" width="60" height="16" rx="2" fill="url(#grad1)" />
+    <!-- Middle horizontal bar -->
+    <rect x="16" y="48" width="44" height="16" rx="2" fill="url(#grad1)" />
+    <!-- Square accent top-right -->
+    <rect x="64" y="20" width="12" height="12" fill="#f59e0b" rx="1" />
+    <!-- Small triangle accent -->
+    <polygon points="52,68 64,68 58,80" fill="#10b981" />
+  </g>
+
+  <!-- M from triangles -->
+  <g transform="translate(120, 20)">
+    <!-- Left vertical -->
+    <rect x="0" y="0" width="16" height="120" rx="2" fill="url(#grad1)" />
+    <!-- Right vertical -->
+    <rect x="84" y="0" width="16" height="120" rx="2" fill="url(#grad1)" />
+    <!-- Left diagonal - triangle -->
+    <polygon points="8,0 50,56 16,0" fill="url(#grad1)" />
+    <polygon points="8,0 50,56 8,56" fill="#1e40af" opacity="0.7" />
+    <!-- Right diagonal - triangle -->
+    <polygon points="92,0 50,56 84,0" fill="url(#grad1)" />
+    <polygon points="92,0 50,56 92,56" fill="#1e40af" opacity="0.7" />
+    <!-- Diamond accent at peak -->
+    <rect x="44" y="50" width="12" height="12" transform="rotate(45, 50, 56)" fill="#f59e0b" />
+    <!-- Circle accent -->
+    <circle cx="50" cy="100" r="6" fill="#10b981" />
+  </g>
+
+  <!-- S from circles and arcs -->
+  <g transform="translate(250, 20)">
+    <!-- Top arc -->
+    <path d="M 70,28 A 28,28 0 1 0 35,56" stroke="url(#grad1)" stroke-width="16" fill="none" stroke-linecap="round" />
+    <!-- Bottom arc -->
+    <path d="M 0,92 A 28,28 0 1 0 35,64" stroke="url(#grad1)" stroke-width="16" fill="none" stroke-linecap="round" />
+    <!-- Triangle accent -->
+    <polygon points="72,80 84,80 78,92" fill="#f59e0b" />
+    <!-- Square accent -->
+    <rect x="-8" y="28" width="10" height="10" fill="#10b981" rx="1" />
+  </g>
+
+  <!-- Subtitle -->
+  <text x="200" y="155" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" letter-spacing="3">FREE MATH SHEETS</text>
+</svg>
