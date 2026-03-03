@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
   <defs>
     <linearGradient id="bulbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.3" />
-      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0" />
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0" />
     </linearGradient>
   </defs>
 
@@ -11,10 +11,10 @@
 
   <!-- Bulb glass outline -->
   <path d="M 118,90 C 108,78 106,60 110,48 C 116,30 132,18 150,18 C 168,18 184,30 190,48 C 194,60 192,78 182,90 L 178,96 L 122,96 Z"
-        fill="none" stroke="#2563eb" stroke-width="4" stroke-linejoin="round" />
+        fill="none" stroke="#3b82f6" stroke-width="4" stroke-linejoin="round" />
 
   <!-- Filament as pi symbol -->
-  <g transform="translate(150, 58)" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round">
+  <g transform="translate(150, 58)" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round">
     <!-- Pi top bar -->
     <line x1="-18" y1="-14" x2="18" y2="-14" />
     <!-- Pi left leg -->
@@ -24,7 +24,7 @@
   </g>
 
   <!-- Small rays around bulb -->
-  <g stroke="#fbbf24" stroke-width="2" stroke-linecap="round">
+  <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round">
     <line x1="150" y1="4" x2="150" y2="-4" />
     <line x1="120" y1="16" x2="114" y2="10" />
     <line x1="180" y1="16" x2="186" y2="10" />
@@ -33,13 +33,13 @@
   </g>
 
   <!-- Bulb base / screw -->
-  <rect x="126" y="96" width="48" height="6" rx="2" fill="#2563eb" />
-  <rect x="130" y="104" width="40" height="5" rx="2" fill="#1e40af" />
-  <rect x="134" y="111" width="32" height="5" rx="2" fill="#2563eb" />
-  <path d="M 138,116 L 140,124 L 160,124 L 162,116" fill="#1e40af" />
+  <rect x="126" y="96" width="48" height="6" rx="2" fill="#3b82f6" />
+  <rect x="130" y="104" width="40" height="5" rx="2" fill="#1e293b" />
+  <rect x="134" y="111" width="32" height="5" rx="2" fill="#3b82f6" />
+  <path d="M 138,116 L 140,124 L 160,124 L 162,116" fill="#1e293b" />
 
   <!-- Text -->
-  <text x="150" y="155" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#1e3a5f">
+  <text x="150" y="155" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
     Free Math Sheets
   </text>
   <text x="150" y="172" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748b" letter-spacing="2">LEARN BY DOING</text>

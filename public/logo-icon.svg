@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bulbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Glow effect -->
+  <circle cx="64" cy="46" r="46" fill="url(#bulbGrad)" />
+
+  <!-- Bulb glass outline -->
+  <path d="M 40,68 C 32,58 30,44 33,34 C 38,20 50,12 64,12 C 78,12 90,20 95,34 C 98,44 96,58 88,68 L 85,73 L 43,73 Z"
+        fill="none" stroke="#3b82f6" stroke-width="4" stroke-linejoin="round" />
+
+  <!-- Filament as pi symbol -->
+  <g transform="translate(64, 44)" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round">
+    <line x1="-14" y1="-11" x2="14" y2="-11" />
+    <path d="M -7,-11 C -7,-3 -9,6 -11,14" />
+    <line x1="7" y1="-11" x2="7" y2="14" />
+  </g>
+
+  <!-- Small rays around bulb -->
+  <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round">
+    <line x1="64" y1="0" x2="64" y2="-6" />
+    <line x1="40" y1="10" x2="35" y2="5" />
+    <line x1="88" y1="10" x2="93" y2="5" />
+    <line x1="24" y1="32" x2="18" y2="30" />
+    <line x1="104" y1="32" x2="110" y2="30" />
+  </g>
+
+  <!-- Bulb base / screw -->
+  <rect x="46" y="73" width="36" height="5" rx="2" fill="#3b82f6" />
+  <rect x="49" y="80" width="30" height="4" rx="2" fill="#1e293b" />
+  <rect x="52" y="86" width="24" height="4" rx="2" fill="#3b82f6" />
+  <path d="M 55,90 L 57,97 L 71,97 L 73,90" fill="#1e293b" />
+</svg>
