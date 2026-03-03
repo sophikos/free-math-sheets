@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25)"
-   sodipodi:docname="custom-logo.svg"
+   sodipodi:docname="logo-icon.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -25,14 +25,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="0.65186406"
-     inkscape:cx="255.42135"
+     inkscape:cx="256.18838"
      inkscape:cy="255.42135"
      inkscape:window-width="1688"
      inkscape:window-height="794"
      inkscape:window-x="0"
      inkscape:window-y="33"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer3"
      showgrid="false">
     <inkscape:grid
        id="grid1"
@@ -237,25 +237,33 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="screw"
-     sodipodi:insensitive="true">
+     transform="translate(0,-5)">
     <path
-       style="fill:none;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 189.59,411.68 c 44.94,4.88 89.88,-2.24 134.82,-21.36"
+       style="fill:none;stroke:#94a3b8;stroke-width:16;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="m 182,393 6,87 c 8,18 42,21 68,21 26,0 60,-3 68,-21 l 6,-87"
+       id="screw-outline"
+       inkscape:label="screw-outline" />
+    <path
+       style="fill:none;stroke:#64748b;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 207.62,408.82 c 32.92,2.79 65.85,-2.43 98.77,-15.64"
        id="path4"
        inkscape:path-effect="#path-effect4"
-       inkscape:original-d="m 189.59,411.68 c 44.94,4.88 89.88,-2.24 134.82,-21.36" />
+       inkscape:original-d="m 207.62,408.82 c 32.92,2.79 65.85,-2.43 98.77,-15.64"
+       transform="translate(0,-2)" />
     <path
-       style="fill:none;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 195.63,448.72 c 40.91,3.52 81.82,-2.96 122.73,-19.44"
+       style="fill:none;stroke:#64748b;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 214.53,445.73 c 28.31,2.52 56.63,-1.97 84.94,-13.45"
        id="path5"
        inkscape:path-effect="#path-effect5"
-       inkscape:original-d="m 195.63,448.72 c 40.91,3.52 81.82,-2.96 122.73,-19.44" />
+       inkscape:original-d="m 214.53,445.73 c 28.31,2.52 56.63,-1.97 84.94,-13.45"
+       transform="translate(0,-2)" />
     <path
-       style="fill:none;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 201.69,485.76 c 36.87,2.16 73.75,-3.68 110.62,-17.52"
+       style="fill:none;stroke:#64748b;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 222.43,482.47 c 23.05,2.35 46.09,-1.30 69.14,-10.95"
        id="path6"
        inkscape:path-effect="#path-effect6"
-       inkscape:original-d="m 201.69,485.76 c 36.87,2.16 73.75,-3.68 110.62,-17.52" />
+       inkscape:original-d="m 222.43,482.47 c 23.05,2.35 46.09,-1.3 69.14,-10.95"
+       transform="translate(0,-2)" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -286,7 +294,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer5"
-     inkscape:label="light-dashes">
+     inkscape:label="light-dashes"
+     sodipodi:insensitive="true">
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
