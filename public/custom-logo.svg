@@ -239,19 +239,19 @@
      inkscape:label="screw"
      sodipodi:insensitive="true">
     <path
-       style="fill:#000000;fill-opacity:0.34902;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 189.59,412.68 c 44.94,-7.12 89.88,-14.24 134.82,-21.36"
        id="path4"
        inkscape:path-effect="#path-effect4"
        inkscape:original-d="m 189.59,412.68 c 44.94,-7.12 89.88,-14.24 134.82,-21.36" />
     <path
-       style="fill:#000000;fill-opacity:0.34902;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 195.63,449.72 c 40.91,-6.48 81.82,-12.96 122.73,-19.44"
        id="path5"
        inkscape:path-effect="#path-effect5"
        inkscape:original-d="m 195.63,449.72 c 40.91,-6.48 81.82,-12.96 122.73,-19.44" />
     <path
-       style="fill:#000000;fill-opacity:0.34902;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#64748b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 201.69,486.76 c 36.87,-5.84 73.75,-11.68 110.62,-17.52"
        id="path6"
        inkscape:path-effect="#path-effect6"
@@ -289,41 +289,41 @@
      inkscape:label="light-dashes">
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path10"
        inkscape:path-effect="#path-effect10"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       inkscape:original-d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        inkscape:label="dash-3" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path11"
        inkscape:path-effect="#path-effect12"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       inkscape:original-d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        transform="rotate(30,256,237)"
        inkscape:label="dash-2" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path12"
        inkscape:path-effect="#path-effect14"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       inkscape:original-d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        transform="rotate(-30,256,237)"
        inkscape:label="dash-4" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path14"
        inkscape:path-effect="#path-effect16"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       inkscape:original-d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        transform="rotate(60,256,237)"
        inkscape:label="dash-1" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f59e0b;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        id="path16"
        inkscape:path-effect="#path-effect18"
-       inkscape:original-d="m 246.98401,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
+       inkscape:original-d="m 256,24.544995 c 0,15.851975 0,31.703951 0,47.555927"
        transform="rotate(-60,256,237)"
        inkscape:label="dash-5" />
   </g>
