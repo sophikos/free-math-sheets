@@ -74,6 +74,7 @@ let make = () => {
     // Toolbar
     <header className="toolbar">
       <div className="toolbar-left">
+        <img src="/logo-icon.svg" alt="Free Math Sheets" className="toolbar-icon" />
         <span className="toolbar-title">
           {React.string("Free Math Sheets")}
         </span>

@@ -101,6 +101,12 @@ body {
   color: var(--color-text-light);
 }
 
+.toolbar-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
 .toolbar-title {
   font-size: 1rem;
   font-weight: 600;
