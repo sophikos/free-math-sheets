@@ -7,6 +7,7 @@
 * Add option to generate first grade subtraction problems that do not have carry.
 * Clean up some unneeded filters for first grade.
 * Add an about page.
+* Put Header and Footer into dedicated components.
 
 ## 0.1.0 -- 2026-02-26
 
