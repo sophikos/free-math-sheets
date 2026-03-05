@@ -676,6 +676,11 @@ body {
   background-color: var(--color-sidebar-hover);
 }
 
+.footer-about-link-active {
+  color: var(--color-text-light);
+  background-color: var(--color-sidebar-active);
+}
+
 .footer-promo {
   display: flex;
   align-items: center;
@@ -1072,6 +1077,3 @@ body {
   left: 0;
 }
 
-.about-footer {
-  flex-shrink: 0;
-}

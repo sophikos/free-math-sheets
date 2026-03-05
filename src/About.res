@@ -84,16 +84,6 @@ let make = () => {
       </div>
     </main>
 
-    <footer className="footer about-footer">
-      <a href="https://www.numerikos.com" className="footer-promo">
-        <img src="/numerikos-logo.png" alt="Numerikos" className="footer-logo" />
-        <span className="footer-promo-text">
-          {React.string("Numerikos")}
-        </span>
-        <span className="footer-promo-tagline">
-          {React.string("- Math Mastery")}
-        </span>
-      </a>
-    </footer>
+    <Footer currentPage={Footer.About} />
   </div>
 }

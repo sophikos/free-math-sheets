@@ -250,26 +250,6 @@ let make = () => {
       </section>
     </main>
 
-    // Footer
-    <footer className="footer">
-      <a href="https://www.numerikos.com" className="footer-promo">
-        <img src="/numerikos-logo.png" alt="Numerikos" className="footer-logo" />
-        <span className="footer-promo-text">
-          {React.string("Numerikos")}
-        </span>
-        <span className="footer-promo-tagline">
-          {React.string("- Math Mastery")}
-        </span>
-      </a>
-      <a
-        href="/about"
-        className="footer-about-link"
-        onClick={e => {
-          ReactEvent.Mouse.preventDefault(e)
-          RescriptReactRouter.push("/about")
-        }}>
-        {React.string("About")}
-      </a>
-    </footer>
+    <Footer currentPage={Footer.Home} />
   </div>
 }
