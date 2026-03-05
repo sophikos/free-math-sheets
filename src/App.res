@@ -261,6 +261,15 @@ let make = () => {
           {React.string("- Math Mastery")}
         </span>
       </a>
+      <a
+        href="/about"
+        className="footer-about-link"
+        onClick={e => {
+          ReactEvent.Mouse.preventDefault(e)
+          RescriptReactRouter.push("/about")
+        }}>
+        {React.string("About")}
+      </a>
     </footer>
   </div>
 }
