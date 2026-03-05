@@ -71,32 +71,17 @@ let make = () => {
   }
 
   <div className="app">
-    // Toolbar
-    <header className="toolbar">
-      <div className="toolbar-left">
-        <img src="/logo-icon.svg" alt="Free Math Sheets" className="toolbar-icon" />
-        <span className="toolbar-title">
-          {React.string("Free Math Sheets")}
-        </span>
-        <span className="toolbar-by">
-          {React.string("by")}
-        </span>
-        <a href="https://www.numerikos.com" className="toolbar-logo-link">
-          <img src="/numerikos-logo.png" alt="Numerikos" className="toolbar-logo-img" />
-          <span className="toolbar-logo-text">
-            {React.string("Numerikos")}
+    <Header
+      leftExtra={
+        <>
+          <div className="toolbar-divider" />
+          <span className="toolbar-document-title">
+            {React.string(worksheetTitle)}
           </span>
-        </a>
-        <div className="toolbar-divider" />
-        <span className="toolbar-document-title">
-          {React.string(worksheetTitle)}
-        </span>
-      </div>
-
-      <div className="toolbar-center" />
-
-      <div className="toolbar-right">
-        {switch worksheet {
+        </>
+      }
+      rightExtra={
+        switch worksheet {
         | Some(ws) =>
           <>
             <button
@@ -119,9 +104,9 @@ let make = () => {
             </button>
           </>
         | None => React.null
-        }}
-      </div>
-    </header>
+        }
+      }
+    />
 
     // Mobile tab bar
     <div className="mobile-tabs">
@@ -250,17 +235,6 @@ let make = () => {
       </section>
     </main>
 
-    // Footer
-    <footer className="footer">
-      <a href="https://www.numerikos.com" className="footer-promo">
-        <img src="/numerikos-logo.png" alt="Numerikos" className="footer-logo" />
-        <span className="footer-promo-text">
-          {React.string("Numerikos")}
-        </span>
-        <span className="footer-promo-tagline">
-          {React.string("- Math Mastery")}
-        </span>
-      </a>
-    </footer>
+    <Footer currentPage={Footer.Home} />
   </div>
 }

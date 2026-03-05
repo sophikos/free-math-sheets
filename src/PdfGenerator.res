@@ -91,9 +91,10 @@ let buildWorksheetPdf = (worksheet: worksheet): JsPdf.t => {
   }
 
   // Problems section
-  let problemsPerRow = 2  // Fewer problems per row for more workspace
+  let problemsPerRow = 2
+  let rowsPerPage = 5
   let columnWidth = contentWidth /. Float.fromInt(problemsPerRow)
-  let rowHeight = 55.0  // More vertical space for student work
+  let rowHeight = 42.0
 
   // Track current page for page breaks
   let currentPage = ref(1)
@@ -103,9 +104,9 @@ let buildWorksheetPdf = (worksheet: worksheet): JsPdf.t => {
     let xBase = margin +. Float.fromInt(col) *. columnWidth
 
     // Calculate actual Y position accounting for page breaks
-    let problemsPerPage = 8  // 2 columns × 4 rows per page
+    let problemsPerPage = problemsPerRow * rowsPerPage
     let pageNum = idx / problemsPerPage + 1
-    let rowOnPage = mod(idx / problemsPerRow, 4)
+    let rowOnPage = mod(idx / problemsPerRow, rowsPerPage)
     let actualY = startY +. Float.fromInt(rowOnPage) *. rowHeight
 
     // Add new page if needed

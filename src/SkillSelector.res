@@ -26,6 +26,9 @@ let make = (
   let (firstAdditionConfig, setFirstAdditionConfig) = React.useState(() =>
     currentConfig->Option.flatMap(c => c.firstAdditionConfig)
   )
+  let (firstSubtractionConfig, setFirstSubtractionConfig) = React.useState(() =>
+    currentConfig->Option.flatMap(c => c.firstSubtractionConfig)
+  )
   let (firstPlaceValueConfig, setFirstPlaceValueConfig) = React.useState(() =>
     currentConfig->Option.flatMap(c => c.firstPlaceValueConfig)
   )
@@ -114,6 +117,7 @@ let make = (
   let clearAllConfigs = () => {
     setKindergartenCountingConfig(_ => None)
     setFirstAdditionConfig(_ => None)
+    setFirstSubtractionConfig(_ => None)
     setFirstPlaceValueConfig(_ => None)
     setFirstTimeConfig(_ => None)
     setSecondAdditionConfig(_ => None)
@@ -152,6 +156,7 @@ let make = (
         | (Problem.KindergartenGrade, Problem.CountingType) => kindergartenCountingConfig->Option.isSome
         // First Grade
         | (Problem.FirstGrade, Problem.AdditionType) => firstAdditionConfig->Option.isSome
+        | (Problem.FirstGrade, Problem.SubtractionType) => firstSubtractionConfig->Option.isSome
         | (Problem.FirstGrade, Problem.PlaceValueType) => firstPlaceValueConfig->Option.isSome
         | (Problem.FirstGrade, Problem.TimeType) => firstTimeConfig->Option.isSome
         // Second Grade
@@ -190,6 +195,7 @@ let make = (
             operation: op,
             kindergartenCountingConfig,
             firstAdditionConfig,
+            firstSubtractionConfig,
             firstPlaceValueConfig,
             firstTimeConfig,
             secondAdditionConfig,
@@ -230,45 +236,52 @@ let make = (
     operation,
     kindergartenCountingConfig,
     firstAdditionConfig,
+    firstSubtractionConfig,
     firstPlaceValueConfig,
     firstTimeConfig,
     secondAdditionConfig,
-    secondPlaceValueConfig,
   ))
 
   React.useEffect7(() => {
     emitConfig()
     None
   }, (
+    secondPlaceValueConfig,
     secondMoneyConfig,
     thirdMultiplicationConfig,
     thirdDivisionConfig,
     thirdFractionConfig,
     thirdRoundingConfig,
     fourthArithmeticConfig,
-    fourthFractionConfig,
   ))
 
   React.useEffect7(() => {
     emitConfig()
     None
   }, (
+    fourthFractionConfig,
     fourthDecimalConfig,
     fourthRoundingConfig,
     fourthDivisionConfig,
     fourthFactorsConfig,
     fourthMeasurementConfig,
     fifthArithmeticConfig,
-    fifthFractionConfig,
   ))
 
-  React.useEffect7(() => {
+  React.useEffect4(() => {
     emitConfig()
     None
   }, (
+    fifthFractionConfig,
     fifthDecimalConfig,
     fifthRoundingConfig,
     fifthDivisionConfig,
+  ))
+
+  React.useEffect4(() => {
+    emitConfig()
+    None
+  }, (
     fifthIntegerConfig,
     fifthExponentConfig,
     fifthOrderOfOperationsConfig,
@@ -320,6 +333,11 @@ let make = (
           <ConfigSelector.FirstAdditionConfig
             value={firstAdditionConfig}
             onChange={cfg => setFirstAdditionConfig(_ => cfg)}
+          />
+        | Problem.SubtractionType =>
+          <ConfigSelector.FirstSubtractionConfig
+            value={firstSubtractionConfig}
+            onChange={cfg => setFirstSubtractionConfig(_ => cfg)}
           />
         | Problem.PlaceValueType =>
           <ConfigSelector.FirstPlaceValueConfig
