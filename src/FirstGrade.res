@@ -20,6 +20,7 @@ type operation =
   // Subtraction (1.OA)
   | SubtractWithinTen   // Subtraction within 10
   | SubtractWithinTwenty // Subtraction within 20
+  | SubtractNoRegrouping // Subtraction without regrouping
   | SubtractMissing     // Find missing number
   | FactFamilies        // Related addition/subtraction facts
   // Place Value (1.NBT)
@@ -40,6 +41,10 @@ type additionConfig =
   | WithinTwenty        // Sums to 20
   | MixedAddition
 
+type subtractionConfig =
+  | SingleDigit          // Single digit minus single digit
+  | TwoDigitMinusSingle  // Two-digit minus single digit
+
 type placeValueConfig =
   | TwoDigit            // Numbers 10-99
   | MixedPlaceValue
@@ -52,6 +57,7 @@ type timeConfig =
 // What type of config an operation needs
 type configType =
   | AdditionType
+  | SubtractionType
   | PlaceValueType
   | TimeType
   | NoConfig
@@ -76,6 +82,7 @@ let operationToString = (operation: operation): string => {
   | AddThreeNumbers => "Add Three Numbers"
   | SubtractWithinTen => "Subtract Within 10"
   | SubtractWithinTwenty => "Subtract Within 20"
+  | SubtractNoRegrouping => "Subtract (No Regrouping)"
   | SubtractMissing => "Find Missing Number"
   | FactFamilies => "Fact Families"
   | TensAndOnes => "Tens and Ones"
@@ -94,6 +101,13 @@ let additionConfigToString = (config: additionConfig): string => {
   | WithinTen => "Within 10"
   | WithinTwenty => "Within 20"
   | MixedAddition => "Mixed (variety)"
+  }
+}
+
+let subtractionConfigToString = (config: subtractionConfig): string => {
+  switch config {
+  | SingleDigit => "Single digit"
+  | TwoDigitMinusSingle => "Two-digit minus single digit"
   }
 }
 
@@ -121,7 +135,7 @@ let getCategories = (): array<category> => {
 let getOperationsForCategory = (category: category): array<operation> => {
   switch category {
   | Addition => [AddWithinTen, AddWithinTwenty, AddDoubles, AddMissing, AddThreeNumbers]
-  | Subtraction => [SubtractWithinTen, SubtractWithinTwenty, SubtractMissing, FactFamilies]
+  | Subtraction => [SubtractWithinTen, SubtractWithinTwenty, SubtractNoRegrouping, SubtractMissing, FactFamilies]
   | PlaceValue => [TensAndOnes, ExpandedForm, AddTensToNumber]
   | Comparing => [CompareNumbers, CompareWithSymbols, OrderNumbers]
   | Time => [TellTimeHour, TellTimeHalfHour]
@@ -131,8 +145,10 @@ let getOperationsForCategory = (category: category): array<operation> => {
 // Get config type for an operation
 let getConfigType = (operation: operation): configType => {
   switch operation {
-  | AddWithinTen | AddWithinTwenty | AddDoubles | AddMissing | AddThreeNumbers => AdditionType
-  | SubtractWithinTen | SubtractWithinTwenty | SubtractMissing => AdditionType
+  | AddWithinTen | AddWithinTwenty => NoConfig
+  | AddDoubles | AddMissing | AddThreeNumbers => AdditionType
+  | SubtractWithinTen | SubtractWithinTwenty | SubtractMissing | FactFamilies => NoConfig
+  | SubtractNoRegrouping => SubtractionType
   | TensAndOnes | ExpandedForm | AddTensToNumber => PlaceValueType
   | TellTimeHour | TellTimeHalfHour => TimeType
   | _ => NoConfig
@@ -142,6 +158,11 @@ let getConfigType = (operation: operation): configType => {
 // Get all addition configs
 let getAdditionConfigs = (): array<additionConfig> => {
   [WithinTen, WithinTwenty, MixedAddition]
+}
+
+// Get all subtraction configs
+let getSubtractionConfigs = (): array<subtractionConfig> => {
+  [SingleDigit, TwoDigitMinusSingle]
 }
 
 // Get all place value configs

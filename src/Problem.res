@@ -42,6 +42,7 @@ type configType =
   | VolumeType
   | CountingType
   | AdditionType
+  | SubtractionType
   | PlaceValueType
   | MoneyType
   | TimeType
@@ -57,6 +58,7 @@ type skillConfig = {
   kindergartenCountingConfig: option<Kindergarten.countingConfig>,
   // First grade configs
   firstAdditionConfig: option<FirstGrade.additionConfig>,
+  firstSubtractionConfig: option<FirstGrade.subtractionConfig>,
   firstPlaceValueConfig: option<FirstGrade.placeValueConfig>,
   firstTimeConfig: option<FirstGrade.timeConfig>,
   // Second grade configs
@@ -192,6 +194,7 @@ let getConfigType = (operation: operation): configType => {
   | FirstGradeOperation(op) =>
     switch FirstGrade.getConfigType(op) {
     | FirstGrade.AdditionType => AdditionType
+    | FirstGrade.SubtractionType => SubtractionType
     | FirstGrade.PlaceValueType => PlaceValueType
     | FirstGrade.TimeType => TimeType
     | FirstGrade.NoConfig => NoConfig
@@ -487,11 +490,11 @@ let generateKindergartenProblem = (op: Kindergarten.operation, config: skillConf
 }
 
 // Problem generators for First Grade
-let generateFirstGradeProblem = (op: FirstGrade.operation, _config: skillConfig): problem => {
+let generateFirstGradeProblem = (op: FirstGrade.operation, config: skillConfig): problem => {
   switch op {
   | AddWithinTen => {
-      let a = randomInt(0, 10)
-      let b = randomInt(0, 10 - a)
+      let a = randomInt(1, 9)
+      let b = randomInt(1, 10 - a)
       {
         topNumber: Int.toString(a),
         operator: "+",
@@ -504,8 +507,8 @@ let generateFirstGradeProblem = (op: FirstGrade.operation, _config: skillConfig)
     }
 
   | AddWithinTwenty => {
-      let a = randomInt(0, 20)
-      let b = randomInt(0, 20 - a)
+      let a = randomInt(1, 19)
+      let b = randomInt(1, 20 - a)
       {
         topNumber: Int.toString(a),
         operator: "+",
@@ -561,8 +564,8 @@ let generateFirstGradeProblem = (op: FirstGrade.operation, _config: skillConfig)
     }
 
   | SubtractWithinTen => {
-      let a = randomInt(1, 10)
-      let b = randomInt(0, a)
+      let a = randomInt(2, 10)
+      let b = randomInt(1, a - 1)
       {
         topNumber: Int.toString(a),
         operator: "-",
@@ -575,8 +578,34 @@ let generateFirstGradeProblem = (op: FirstGrade.operation, _config: skillConfig)
     }
 
   | SubtractWithinTwenty => {
-      let a = randomInt(1, 20)
-      let b = randomInt(0, a)
+      let a = randomInt(2, 20)
+      let b = randomInt(1, a - 1)
+      {
+        topNumber: Int.toString(a),
+        operator: "-",
+        bottomNumber: Int.toString(b),
+        answer: Int.toString(a - b),
+        isVertical: true,
+        horizontalDisplay: None,
+        fractionData: None,
+      }
+    }
+
+  | SubtractNoRegrouping => {
+      let subConfig = config.firstSubtractionConfig
+      let (a, b) = switch subConfig {
+      | Some(FirstGrade.SingleDigit) => {
+          let a = randomInt(2, 9)
+          let b = randomInt(1, a - 1)
+          (a, b)
+        }
+      | Some(FirstGrade.TwoDigitMinusSingle) | None => {
+          let tens = randomInt(1, 9)
+          let onesA = randomInt(2, 9)
+          let onesB = randomInt(1, onesA - 1)
+          (tens * 10 + onesA, onesB)
+        }
+      }
       {
         topNumber: Int.toString(a),
         operator: "-",

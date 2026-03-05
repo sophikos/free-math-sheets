@@ -24,6 +24,7 @@ let operationToValue = (op: option<Problem.operation>): string => {
   | Some(Problem.FirstGradeOperation(FirstGrade.AddThreeNumbers)) => "addthreenumbers"
   | Some(Problem.FirstGradeOperation(FirstGrade.SubtractWithinTen)) => "subtractwithinten"
   | Some(Problem.FirstGradeOperation(FirstGrade.SubtractWithinTwenty)) => "subtractwithintwenty"
+  | Some(Problem.FirstGradeOperation(FirstGrade.SubtractNoRegrouping)) => "subtractnoregrouping"
   | Some(Problem.FirstGradeOperation(FirstGrade.SubtractMissing)) => "subtractmissing"
   | Some(Problem.FirstGradeOperation(FirstGrade.FactFamilies)) => "factfamilies"
   | Some(Problem.FirstGradeOperation(FirstGrade.TensAndOnes)) => "tensandones"
@@ -245,6 +246,7 @@ let valueToFirstGradeOperation = (value: string): option<Problem.operation> => {
   | "addthreenumbers" => Some(Problem.FirstGradeOperation(FirstGrade.AddThreeNumbers))
   | "subtractwithinten" => Some(Problem.FirstGradeOperation(FirstGrade.SubtractWithinTen))
   | "subtractwithintwenty" => Some(Problem.FirstGradeOperation(FirstGrade.SubtractWithinTwenty))
+  | "subtractnoregrouping" => Some(Problem.FirstGradeOperation(FirstGrade.SubtractNoRegrouping))
   | "subtractmissing" => Some(Problem.FirstGradeOperation(FirstGrade.SubtractMissing))
   | "factfamilies" => Some(Problem.FirstGradeOperation(FirstGrade.FactFamilies))
   | "tensandones" => Some(Problem.FirstGradeOperation(FirstGrade.TensAndOnes))

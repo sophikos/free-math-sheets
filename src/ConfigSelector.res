@@ -74,6 +74,40 @@ module FirstAdditionConfig = {
   }
 }
 
+// First Grade Subtraction Config
+module FirstSubtractionConfig = {
+  @react.component
+  let make = (
+    ~value: option<FirstGrade.subtractionConfig>,
+    ~onChange: option<FirstGrade.subtractionConfig> => unit,
+  ) => {
+    let currentValue = switch value {
+    | Some(FirstGrade.SingleDigit) => "singledigit"
+    | Some(FirstGrade.TwoDigitMinusSingle) => "twodigitminussingle"
+    | None => ""
+    }
+
+    let handleChange = (e: ReactEvent.Form.t) => {
+      let v = ReactEvent.Form.target(e)["value"]
+      let cfg = switch v {
+      | "singledigit" => Some(FirstGrade.SingleDigit)
+      | "twodigitminussingle" => Some(FirstGrade.TwoDigitMinusSingle)
+      | _ => None
+      }
+      onChange(cfg)
+    }
+
+    <div className="form-group">
+      <label className="form-label"> {React.string("Number Size")} </label>
+      <select className="form-select" value={currentValue} onChange={handleChange}>
+        <option value=""> {React.string("Select size...")} </option>
+        <option value="singledigit"> {React.string("Single digit (e.g. 7 - 3)")} </option>
+        <option value="twodigitminussingle"> {React.string("Two-digit minus single (e.g. 45 - 3)")} </option>
+      </select>
+    </div>
+  }
+}
+
 // First Grade Place Value Config
 module FirstPlaceValueConfig = {
   @react.component
