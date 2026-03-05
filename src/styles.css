@@ -101,6 +101,13 @@ body {
   color: var(--color-text-light);
 }
 
+.toolbar-home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
 .toolbar-icon {
   width: 40px;
   height: 40px;
@@ -996,15 +1003,6 @@ body {
   height: 100%;
 }
 
-.about-page .toolbar-title {
-  text-decoration: none;
-  color: var(--color-text-light);
-}
-
-.about-page .toolbar-title:hover {
-  color: var(--color-primary);
-}
-
 .about-content {
   flex: 1;
   overflow-y: auto;
@@ -1056,6 +1054,17 @@ body {
   text-decoration: underline;
 }
 
+.about-link-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.about-icon {
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
 .about-links {
   list-style: none;
   padding: 0;
@@ -1070,10 +1079,3 @@ body {
   padding-left: 1rem;
   position: relative;
 }
-
-.about-links li::before {
-  content: "-";
-  position: absolute;
-  left: 0;
-}
-
