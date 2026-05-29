@@ -47,6 +47,10 @@ let categoryToValue = (cat: option<Problem.category>): string => {
   | Some(Problem.FifthGradeCategory(FifthGrade.Exponents)) => "exponents"
   | Some(Problem.FifthGradeCategory(FifthGrade.OrderOfOperations)) => "orderofoperations"
   | Some(Problem.FifthGradeCategory(FifthGrade.Volume)) => "volume"
+  // Trigonometry
+  | Some(Problem.TrigonometryCategory(Trigonometry.SpecialAngles)) => "specialangles"
+  | Some(Problem.TrigonometryCategory(Trigonometry.Angles)) => "angles"
+  | Some(Problem.TrigonometryCategory(Trigonometry.RightTriangle)) => "righttriangle"
   | None => ""
   }
 }
@@ -98,6 +102,10 @@ let valueToCategory = (grade: Problem.grade, value: string): option<Problem.cate
   | (Problem.FifthGrade, "exponents") => Some(Problem.FifthGradeCategory(FifthGrade.Exponents))
   | (Problem.FifthGrade, "orderofoperations") => Some(Problem.FifthGradeCategory(FifthGrade.OrderOfOperations))
   | (Problem.FifthGrade, "volume") => Some(Problem.FifthGradeCategory(FifthGrade.Volume))
+  // Trigonometry
+  | (Problem.TrigonometryGrade, "specialangles") => Some(Problem.TrigonometryCategory(Trigonometry.SpecialAngles))
+  | (Problem.TrigonometryGrade, "angles") => Some(Problem.TrigonometryCategory(Trigonometry.Angles))
+  | (Problem.TrigonometryGrade, "righttriangle") => Some(Problem.TrigonometryCategory(Trigonometry.RightTriangle))
   | _ => None
   }
 }
@@ -173,6 +181,12 @@ let make = (
         <option value="exponents"> {React.string("Exponents")} </option>
         <option value="orderofoperations"> {React.string("Order of Operations")} </option>
         <option value="volume"> {React.string("Volume")} </option>
+      </>
+    | Some(Problem.TrigonometryGrade) =>
+      <>
+        <option value="specialangles"> {React.string("Special Angles")} </option>
+        <option value="angles"> {React.string("Angles")} </option>
+        <option value="righttriangle"> {React.string("Right Triangles")} </option>
       </>
     | None => React.null
     }

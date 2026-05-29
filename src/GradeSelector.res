@@ -14,6 +14,7 @@ let make = (
     | "third" => Some(Problem.ThirdGrade)
     | "fourth" => Some(Problem.FourthGrade)
     | "fifth" => Some(Problem.FifthGrade)
+    | "trigonometry" => Some(Problem.TrigonometryGrade)
     | _ => None
     }
     onChange(newGrade)
@@ -26,6 +27,7 @@ let make = (
   | Some(Problem.ThirdGrade) => "third"
   | Some(Problem.FourthGrade) => "fourth"
   | Some(Problem.FifthGrade) => "fifth"
+  | Some(Problem.TrigonometryGrade) => "trigonometry"
   | None => ""
   }
 
@@ -39,6 +41,7 @@ let make = (
       <option value="third"> {React.string("Third Grade")} </option>
       <option value="fourth"> {React.string("Fourth Grade")} </option>
       <option value="fifth"> {React.string("Fifth Grade")} </option>
+      <option value="trigonometry"> {React.string("Trigonometry")} </option>
     </select>
   </div>
 }
