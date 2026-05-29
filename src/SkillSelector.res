@@ -2,20 +2,18 @@
 
 @react.component
 let make = (
-  ~onConfigChange: Problem.skillConfig => unit,
-  ~onConfigClear: unit => unit,
-  ~currentConfig: option<Problem.skillConfig>,
+  // The selections to restore on mount (e.g. from the URL).
+  ~initialSelection: UrlState.selection,
+  // Reports the current selection (including intermediate states) on change.
+  ~onSelectionChange: UrlState.selection => unit,
 ) => {
-  // State for each dropdown level
-  let (course, setCourse) = React.useState(() =>
-    currentConfig->Option.map(c => c.course)
-  )
-  let (category, setCategory) = React.useState(() =>
-    currentConfig->Option.map(c => c.category)
-  )
-  let (operation, setOperation) = React.useState(() =>
-    currentConfig->Option.map(c => c.operation)
-  )
+  // Config states seed from a record derived from the initial selection.
+  let currentConfig = UrlState.selectionToRecord(initialSelection)
+
+  // State for each dropdown level, seeded from the initial selection.
+  let (course, setCourse) = React.useState(() => initialSelection.course)
+  let (category, setCategory) = React.useState(() => initialSelection.category)
+  let (operation, setOperation) = React.useState(() => initialSelection.operation)
 
   // Kindergarten config state
   let (kindergartenCountingConfig, setKindergartenCountingConfig) = React.useState(() =>
@@ -145,107 +143,17 @@ let make = (
     setFifthVolumeConfig(_ => None)
   }
 
-  // Build and emit config when all required fields are set
-  let emitConfig = () => {
-    switch (course, category, operation) {
-    | (Some(g), Some(cat), Some(op)) => {
-        let configType = Problem.getConfigType(op)
-        let hasRequiredConfig = switch (g, configType) {
-        | (_, Problem.NoConfig) => true
-        // Kindergarten
-        | (Problem.KindergartenGrade, Problem.CountingType) => kindergartenCountingConfig->Option.isSome
-        // First Grade
-        | (Problem.FirstGrade, Problem.AdditionType) => firstAdditionConfig->Option.isSome
-        | (Problem.FirstGrade, Problem.SubtractionType) => firstSubtractionConfig->Option.isSome
-        | (Problem.FirstGrade, Problem.PlaceValueType) => firstPlaceValueConfig->Option.isSome
-        | (Problem.FirstGrade, Problem.TimeType) => firstTimeConfig->Option.isSome
-        // Second Grade
-        | (Problem.SecondGrade, Problem.AdditionType) => secondAdditionConfig->Option.isSome
-        | (Problem.SecondGrade, Problem.PlaceValueType) => secondPlaceValueConfig->Option.isSome
-        | (Problem.SecondGrade, Problem.MoneyType) => secondMoneyConfig->Option.isSome
-        // Third Grade
-        | (Problem.ThirdGrade, Problem.MultiplicationType) => thirdMultiplicationConfig->Option.isSome
-        | (Problem.ThirdGrade, Problem.DivisionType) => thirdDivisionConfig->Option.isSome
-        | (Problem.ThirdGrade, Problem.FractionType) => thirdFractionConfig->Option.isSome
-        | (Problem.ThirdGrade, Problem.RoundingType) => thirdRoundingConfig->Option.isSome
-        // Fourth Grade
-        | (Problem.FourthGrade, Problem.ArithmeticType) => fourthArithmeticConfig->Option.isSome
-        | (Problem.FourthGrade, Problem.FractionType) => fourthFractionConfig->Option.isSome
-        | (Problem.FourthGrade, Problem.DecimalType) => fourthDecimalConfig->Option.isSome
-        | (Problem.FourthGrade, Problem.RoundingType) => fourthRoundingConfig->Option.isSome
-        | (Problem.FourthGrade, Problem.DivisionType) => fourthDivisionConfig->Option.isSome
-        | (Problem.FourthGrade, Problem.FactorsType) => fourthFactorsConfig->Option.isSome
-        | (Problem.FourthGrade, Problem.MeasurementType) => fourthMeasurementConfig->Option.isSome
-        // Fifth Grade
-        | (Problem.FifthGrade, Problem.ArithmeticType) => fifthArithmeticConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.FractionType) => fifthFractionConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.DecimalType) => fifthDecimalConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.RoundingType) => fifthRoundingConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.DivisionType) => fifthDivisionConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.IntegerType) => fifthIntegerConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.ExponentType) => fifthExponentConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.OrderOfOperationsType) => fifthOrderOfOperationsConfig->Option.isSome
-        | (Problem.FifthGrade, Problem.VolumeType) => fifthVolumeConfig->Option.isSome
-        | _ => false
-        }
-        if hasRequiredConfig {
-          onConfigChange({
-            Problem.course: g,
-            category: cat,
-            operation: op,
-            kindergartenCountingConfig,
-            firstAdditionConfig,
-            firstSubtractionConfig,
-            firstPlaceValueConfig,
-            firstTimeConfig,
-            secondAdditionConfig,
-            secondPlaceValueConfig,
-            secondMoneyConfig,
-            thirdMultiplicationConfig,
-            thirdDivisionConfig,
-            thirdFractionConfig,
-            thirdRoundingConfig,
-            fourthArithmeticConfig,
-            fourthFractionConfig,
-            fourthDecimalConfig,
-            fourthRoundingConfig,
-            fourthDivisionConfig,
-            fourthFactorsConfig,
-            fourthMeasurementConfig,
-            fifthArithmeticConfig,
-            fifthFractionConfig,
-            fifthDecimalConfig,
-            fifthRoundingConfig,
-            fifthDivisionConfig,
-            fifthIntegerConfig,
-            fifthExponentConfig,
-            fifthOrderOfOperationsConfig,
-            fifthVolumeConfig,
-          })
-        }
-      }
-    | _ => ()
-    }
-  }
-
-  // Emit config whenever relevant state changes
-  React.useEffect7(() => {
-    emitConfig()
-    None
-  }, (
-    operation,
+  // Assemble a skill config record from the current selection and config states.
+  let buildRecord = (g: Problem.course, cat: Problem.category, op: Problem.operation): Problem.skillConfig => {
+    Problem.course: g,
+    category: cat,
+    operation: op,
     kindergartenCountingConfig,
     firstAdditionConfig,
     firstSubtractionConfig,
     firstPlaceValueConfig,
     firstTimeConfig,
     secondAdditionConfig,
-  ))
-
-  React.useEffect7(() => {
-    emitConfig()
-    None
-  }, (
     secondPlaceValueConfig,
     secondMoneyConfig,
     thirdMultiplicationConfig,
@@ -253,12 +161,6 @@ let make = (
     thirdFractionConfig,
     thirdRoundingConfig,
     fourthArithmeticConfig,
-  ))
-
-  React.useEffect7(() => {
-    emitConfig()
-    None
-  }, (
     fourthFractionConfig,
     fourthDecimalConfig,
     fourthRoundingConfig,
@@ -266,27 +168,33 @@ let make = (
     fourthFactorsConfig,
     fourthMeasurementConfig,
     fifthArithmeticConfig,
-  ))
-
-  React.useEffect4(() => {
-    emitConfig()
-    None
-  }, (
     fifthFractionConfig,
     fifthDecimalConfig,
     fifthRoundingConfig,
     fifthDivisionConfig,
-  ))
-
-  React.useEffect4(() => {
-    emitConfig()
-    None
-  }, (
     fifthIntegerConfig,
     fifthExponentConfig,
     fifthOrderOfOperationsConfig,
     fifthVolumeConfig,
-  ))
+  }
+
+  // The active config rendered as a value token, once a config-bearing
+  // operation is fully selected.
+  let activeConfigValue = switch (course, category, operation) {
+  | (Some(g), Some(cat), Some(op)) => UrlState.configToValue(buildRecord(g, cat, op))
+  | _ => None
+  }
+
+  // Report the current selection (including intermediate states) on change.
+  React.useEffect4(() => {
+    onSelectionChange({
+      UrlState.course: course,
+      category,
+      operation,
+      configValue: activeConfigValue,
+    })
+    None
+  }, (course, category, operation, activeConfigValue))
 
   // Handle course change
   let handleCourseChange = (newCourse: option<Problem.course>) => {
@@ -294,7 +202,6 @@ let make = (
     setCategory(_ => None)
     setOperation(_ => None)
     clearAllConfigs()
-    onConfigClear()
   }
 
   // Handle category change
@@ -302,14 +209,12 @@ let make = (
     setCategory(_ => newCategory)
     setOperation(_ => None)
     clearAllConfigs()
-    onConfigClear()
   }
 
   // Handle operation change
   let handleOperationChange = (newOperation: option<Problem.operation>) => {
     setOperation(_ => newOperation)
     clearAllConfigs()
-    onConfigClear()
   }
 
   // Render config selector based on operation and course
