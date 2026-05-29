@@ -1,4 +1,4 @@
-// Skill Selector - Composes grade, category, operation, and config selectors
+// Skill Selector - Composes course, category, operation, and config selectors
 
 @react.component
 let make = (
@@ -7,8 +7,8 @@ let make = (
   ~currentConfig: option<Problem.skillConfig>,
 ) => {
   // State for each dropdown level
-  let (grade, setGrade) = React.useState(() =>
-    currentConfig->Option.map(c => c.grade)
+  let (course, setCourse) = React.useState(() =>
+    currentConfig->Option.map(c => c.course)
   )
   let (category, setCategory) = React.useState(() =>
     currentConfig->Option.map(c => c.category)
@@ -147,7 +147,7 @@ let make = (
 
   // Build and emit config when all required fields are set
   let emitConfig = () => {
-    switch (grade, category, operation) {
+    switch (course, category, operation) {
     | (Some(g), Some(cat), Some(op)) => {
         let configType = Problem.getConfigType(op)
         let hasRequiredConfig = switch (g, configType) {
@@ -190,7 +190,7 @@ let make = (
         }
         if hasRequiredConfig {
           onConfigChange({
-            Problem.grade: g,
+            Problem.course: g,
             category: cat,
             operation: op,
             kindergartenCountingConfig,
@@ -288,9 +288,9 @@ let make = (
     fifthVolumeConfig,
   ))
 
-  // Handle grade change
-  let handleGradeChange = (newGrade: option<Problem.grade>) => {
-    setGrade(_ => newGrade)
+  // Handle course change
+  let handleCourseChange = (newCourse: option<Problem.course>) => {
+    setCourse(_ => newCourse)
     setCategory(_ => None)
     setOperation(_ => None)
     clearAllConfigs()
@@ -312,9 +312,9 @@ let make = (
     onConfigClear()
   }
 
-  // Render config selector based on operation and grade
+  // Render config selector based on operation and course
   let renderConfigSelector = () => {
-    switch (grade, operation) {
+    switch (course, operation) {
     | (Some(Problem.KindergartenGrade), Some(op)) => {
         let configType = Problem.getConfigType(op)
         switch configType {
@@ -496,9 +496,9 @@ let make = (
   }
 
   <>
-    <GradeSelector value={grade} onChange={handleGradeChange} />
-    <CategorySelector grade={grade} value={category} onChange={handleCategoryChange} />
-    <OperationSelector grade={grade} category={category} value={operation} onChange={handleOperationChange} />
+    <CourseSelector value={course} onChange={handleCourseChange} />
+    <CategorySelector course={course} value={category} onChange={handleCategoryChange} />
+    <OperationSelector course={course} category={category} value={operation} onChange={handleOperationChange} />
     {renderConfigSelector()}
   </>
 }

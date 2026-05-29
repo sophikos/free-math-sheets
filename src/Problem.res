@@ -1,7 +1,7 @@
 // Problem types and generation - combines all grades
 
-// Grade sum type
-type grade =
+// Course sum type
+type course =
   | KindergartenGrade
   | FirstGrade
   | SecondGrade
@@ -54,7 +54,7 @@ type configType =
 
 // Skill configuration
 type skillConfig = {
-  grade: grade,
+  course: course,
   category: category,
   operation: operation,
   // Kindergarten configs
@@ -129,8 +129,8 @@ type problem = {
 }
 
 // String conversions
-let gradeToString = (grade: grade): string => {
-  switch grade {
+let courseToString = (course: course): string => {
+  switch course {
   | KindergartenGrade => "Kindergarten"
   | FirstGrade => "First Grade"
   | SecondGrade => "Second Grade"
@@ -165,9 +165,9 @@ let operationToString = (operation: operation): string => {
   }
 }
 
-// Get categories for a grade
-let getCategoriesForGrade = (grade: grade): array<category> => {
-  switch grade {
+// Get categories for a course
+let getCategoriesForCourse = (course: course): array<category> => {
+  switch course {
   | KindergartenGrade => Kindergarten.getCategories()->Array.map(c => KindergartenCategory(c))
   | FirstGrade => FirstGrade.getCategories()->Array.map(c => FirstGradeCategory(c))
   | SecondGrade => SecondGrade.getCategories()->Array.map(c => SecondGradeCategory(c))

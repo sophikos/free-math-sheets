@@ -355,14 +355,14 @@ let valueToThirdGradeOperation = (value: string): option<Problem.operation> => {
 
 @react.component
 let make = (
-  ~grade: option<Problem.grade>,
+  ~course: option<Problem.course>,
   ~category: option<Problem.category>,
   ~value: option<Problem.operation>,
   ~onChange: option<Problem.operation> => unit,
 ) => {
   let handleChange = (e: ReactEvent.Form.t) => {
     let v = ReactEvent.Form.target(e)["value"]
-    switch grade {
+    switch course {
     | Some(Problem.KindergartenGrade) => onChange(valueToKindergartenOperation(v))
     | Some(Problem.FirstGrade) => onChange(valueToFirstGradeOperation(v))
     | Some(Problem.SecondGrade) => onChange(valueToSecondGradeOperation(v))

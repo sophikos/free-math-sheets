@@ -56,9 +56,9 @@ let categoryToValue = (cat: option<Problem.category>): string => {
   }
 }
 
-// Convert value to category based on grade
-let valueToCategory = (grade: Problem.grade, value: string): option<Problem.category> => {
-  switch (grade, value) {
+// Convert value to category based on course
+let valueToCategory = (course: Problem.course, value: string): option<Problem.category> => {
+  switch (course, value) {
   // Kindergarten
   | (Problem.KindergartenGrade, "counting") => Some(Problem.KindergartenCategory(Kindergarten.Counting))
   | (Problem.KindergartenGrade, "comparing") => Some(Problem.KindergartenCategory(Kindergarten.Comparing))
@@ -114,20 +114,20 @@ let valueToCategory = (grade: Problem.grade, value: string): option<Problem.cate
 
 @react.component
 let make = (
-  ~grade: option<Problem.grade>,
+  ~course: option<Problem.course>,
   ~value: option<Problem.category>,
   ~onChange: option<Problem.category> => unit,
 ) => {
   let handleChange = (e: ReactEvent.Form.t) => {
     let v = ReactEvent.Form.target(e)["value"]
-    switch grade {
+    switch course {
     | Some(g) => onChange(valueToCategory(g, v))
     | None => ()
     }
   }
 
   let renderOptions = () => {
-    switch grade {
+    switch course {
     | Some(Problem.KindergartenGrade) =>
       <>
         <option value="counting"> {React.string("Counting")} </option>
@@ -195,7 +195,7 @@ let make = (
     }
   }
 
-  switch grade {
+  switch course {
   | Some(_) =>
     <div className="form-group">
       <label className="form-label"> {React.string("Category")} </label>
