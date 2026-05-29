@@ -185,11 +185,11 @@ let make = (
         <option value="volume"> {React.string("Volume")} </option>
       </>
     | Some(Problem.TrigonometryGrade) =>
-      <>
-        <option value="specialangles"> {React.string("Special Angles")} </option>
+      <>        
         <option value="angles"> {React.string("Angles")} </option>
         <option value="sohcahtoa"> {React.string("SOH-CAH-TOA")} </option>
         <option value="righttriangle"> {React.string("Right Triangles")} </option>
+        <option value="specialangles"> {React.string("Special Angles")} </option>
       </>
     | None => React.null
     }
