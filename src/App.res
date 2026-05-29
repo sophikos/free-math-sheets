@@ -1,7 +1,7 @@
 // Worksheet Generator App
 
 type worksheetState = {
-  skillConfig: option<Problem.skillConfig>,
+  selection: UrlState.selection,
   problemCount: int,
   title: string,
   showNameDate: bool,
@@ -11,21 +11,38 @@ type mobileView = Edit | Preview
 
 @react.component
 let make = () => {
+  // Restore selections from the URL query string on first load.
+  let (initialUrlState, _) = React.useState(() =>
+    UrlState.decode(RescriptReactRouter.dangerouslyGetInitialUrl().search)
+  )
+
   let (state, setState) = React.useState(() => {
-    skillConfig: None,
-    problemCount: 10,
-    title: "Math Practice",
-    showNameDate: true,
+    selection: initialUrlState.selection,
+    problemCount: initialUrlState.problemCount->Option.getOr(UrlState.defaultProblemCount),
+    title: initialUrlState.title->Option.getOr(UrlState.defaultTitle),
+    showNameDate: initialUrlState.showNameDate->Option.getOr(UrlState.defaultShowNameDate),
   })
   let (worksheet, setWorksheet) = React.useState(() => None)
   let (mobileView, setMobileView) = React.useState(() => Edit)
 
-  let handleSkillConfigChange = (config: Problem.skillConfig) => {
-    setState(prev => {...prev, skillConfig: Some(config)})
-  }
+  // The generate-ready config derived from the current selection, if complete.
+  let skillConfig =
+    UrlState.selectionToRecord(state.selection)->Option.filter(UrlState.isComplete)
 
-  let handleSkillConfigClear = () => {
-    setState(prev => {...prev, skillConfig: None})
+  // Keep the URL in sync with the current selections so it can be bookmarked.
+  React.useEffect4(() => {
+    let query = UrlState.encode(
+      ~selection=state.selection,
+      ~problemCount=state.problemCount,
+      ~title=state.title,
+      ~showNameDate=state.showNameDate,
+    )
+    RescriptReactRouter.replace(query == "" ? "/" : "/?" ++ query)
+    None
+  }, (state.selection, state.problemCount, state.title, state.showNameDate))
+
+  let handleSelectionChange = (selection: UrlState.selection) => {
+    setState(prev => {...prev, selection})
   }
 
   let handleCountChange = (count: int) => {
@@ -37,7 +54,7 @@ let make = () => {
   }
 
   let handleGenerate = () => {
-    switch state.skillConfig {
+    switch skillConfig {
     | Some(config) => {
         let problems = Array.make(~length=state.problemCount, ())->Array.map(_ => {
           Problem.generate(config)
@@ -65,7 +82,7 @@ let make = () => {
     state.title
   }
 
-  let isConfigComplete = switch state.skillConfig {
+  let isConfigComplete = switch skillConfig {
   | Some(_) => true
   | None => false
   }
@@ -164,9 +181,8 @@ let make = () => {
           </div>
 
           <SkillSelector
-            onConfigChange={handleSkillConfigChange}
-            onConfigClear={handleSkillConfigClear}
-            currentConfig={state.skillConfig}
+            initialSelection={initialUrlState.selection}
+            onSelectionChange={handleSelectionChange}
           />
 
           <div className="form-group">
