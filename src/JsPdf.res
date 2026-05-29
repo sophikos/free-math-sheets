@@ -33,6 +33,20 @@ external getBlobUrl: t => Nullable.t<string> = "getBlobUrl"
 @send external textWithOptions: (t, string, float, float, textOptions) => t = "text"
 @send external setFontSize: (t, int) => t = "setFontSize"
 @send external setFont: (t, string, string) => t = "setFont"
+
+// Embed a custom TTF font: register the file in jsPDF's virtual file system,
+// then declare it as a usable font under the given family/style name.
+@send external addFileToVFS: (t, string, string) => t = "addFileToVFS"
+@send external addFont: (t, string, string, string) => t = "addFont"
+
+// Register the embedded math font (DejaVu Serif subset) so Unicode math
+// glyphs (sqrt, pi, theta, superscripts, fraction slash) render correctly.
+let mathFontName = "MathSerif"
+let registerMathFont = (pdf: t): t => {
+  let _ = pdf->addFileToVFS("MathSerif.ttf", MathFont.base64)
+  let _ = pdf->addFont("MathSerif.ttf", mathFontName, "normal")
+  pdf
+}
 @send external addPage: t => t = "addPage"
 @send external line: (t, float, float, float, float) => t = "line"
 @send external setDrawColor: (t, int, int, int) => t = "setDrawColor"

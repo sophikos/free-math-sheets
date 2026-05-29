@@ -1,13 +1,14 @@
 // Problem types and generation - combines all grades
 
-// Grade sum type
-type grade =
+// Course sum type
+type course =
   | KindergartenGrade
   | FirstGrade
   | SecondGrade
   | ThirdGrade
   | FourthGrade
   | FifthGrade
+  | TrigonometryGrade
 
 // Category sum type (wraps grade-specific categories)
 type category =
@@ -17,6 +18,7 @@ type category =
   | ThirdGradeCategory(ThirdGrade.category)
   | FourthGradeCategory(FourthGrade.category)
   | FifthGradeCategory(FifthGrade.category)
+  | TrigonometryCategory(Trigonometry.category)
 
 // Operation sum type (wraps grade-specific operations)
 type operation =
@@ -26,6 +28,7 @@ type operation =
   | ThirdGradeOperation(ThirdGrade.operation)
   | FourthGradeOperation(FourthGrade.operation)
   | FifthGradeOperation(FifthGrade.operation)
+  | TrigonometryOperation(Trigonometry.operation)
 
 // Config type indicator
 type configType =
@@ -51,7 +54,7 @@ type configType =
 
 // Skill configuration
 type skillConfig = {
-  grade: grade,
+  course: course,
   category: category,
   operation: operation,
   // Kindergarten configs
@@ -126,14 +129,15 @@ type problem = {
 }
 
 // String conversions
-let gradeToString = (grade: grade): string => {
-  switch grade {
+let courseToString = (course: course): string => {
+  switch course {
   | KindergartenGrade => "Kindergarten"
   | FirstGrade => "First Grade"
   | SecondGrade => "Second Grade"
   | ThirdGrade => "Third Grade"
   | FourthGrade => "Fourth Grade"
   | FifthGrade => "Fifth Grade"
+  | TrigonometryGrade => "Trigonometry"
   }
 }
 
@@ -145,6 +149,7 @@ let categoryToString = (category: category): string => {
   | ThirdGradeCategory(cat) => ThirdGrade.categoryToString(cat)
   | FourthGradeCategory(cat) => FourthGrade.categoryToString(cat)
   | FifthGradeCategory(cat) => FifthGrade.categoryToString(cat)
+  | TrigonometryCategory(cat) => Trigonometry.categoryToString(cat)
   }
 }
 
@@ -156,18 +161,20 @@ let operationToString = (operation: operation): string => {
   | ThirdGradeOperation(op) => ThirdGrade.operationToString(op)
   | FourthGradeOperation(op) => FourthGrade.operationToString(op)
   | FifthGradeOperation(op) => FifthGrade.operationToString(op)
+  | TrigonometryOperation(op) => Trigonometry.operationToString(op)
   }
 }
 
-// Get categories for a grade
-let getCategoriesForGrade = (grade: grade): array<category> => {
-  switch grade {
+// Get categories for a course
+let getCategoriesForCourse = (course: course): array<category> => {
+  switch course {
   | KindergartenGrade => Kindergarten.getCategories()->Array.map(c => KindergartenCategory(c))
   | FirstGrade => FirstGrade.getCategories()->Array.map(c => FirstGradeCategory(c))
   | SecondGrade => SecondGrade.getCategories()->Array.map(c => SecondGradeCategory(c))
   | ThirdGrade => ThirdGrade.getCategories()->Array.map(c => ThirdGradeCategory(c))
   | FourthGrade => FourthGrade.getCategories()->Array.map(c => FourthGradeCategory(c))
   | FifthGrade => FifthGrade.getCategories()->Array.map(c => FifthGradeCategory(c))
+  | TrigonometryGrade => Trigonometry.getCategories()->Array.map(c => TrigonometryCategory(c))
   }
 }
 
@@ -180,6 +187,7 @@ let getOperationsForCategory = (category: category): array<operation> => {
   | ThirdGradeCategory(cat) => ThirdGrade.getOperationsForCategory(cat)->Array.map(op => ThirdGradeOperation(op))
   | FourthGradeCategory(cat) => FourthGrade.getOperationsForCategory(cat)->Array.map(op => FourthGradeOperation(op))
   | FifthGradeCategory(cat) => FifthGrade.getOperationsForCategory(cat)->Array.map(op => FifthGradeOperation(op))
+  | TrigonometryCategory(cat) => Trigonometry.getOperationsForCategory(cat)->Array.map(op => TrigonometryOperation(op))
   }
 }
 
@@ -237,6 +245,10 @@ let getConfigType = (operation: operation): configType => {
     | FifthGrade.OrderOfOperationsType => OrderOfOperationsType
     | FifthGrade.VolumeType => VolumeType
     | FifthGrade.NoConfig => NoConfig
+    }
+  | TrigonometryOperation(op) =>
+    switch Trigonometry.getConfigType(op) {
+    | Trigonometry.NoConfig => NoConfig
     }
   }
 }
@@ -2971,6 +2983,182 @@ let generateFifthGradeProblem = (op: FifthGrade.operation, config: skillConfig):
   }
 }
 
+let generateTrigonometryProblem = (op: Trigonometry.operation, _config: skillConfig): problem => {
+  // Build a horizontal (text) problem with a string answer
+  let horiz = (display: string, answer: string): problem => {
+    topNumber: "",
+    operator: "",
+    bottomNumber: "",
+    answer,
+    isVertical: false,
+    horizontalDisplay: Some(display),
+    fractionData: None,
+  }
+
+  // Pick a random element from a non-empty array
+  let pick = arr => arr->Array.getUnsafe(randomInt(0, Array.length(arr) - 1))
+
+  // Reduced fraction as a string using the Unicode fraction slash, e.g. (6, 10) => "3⁄5"
+  let frac = (n: int, d: int): string => {
+    let g = gcd(n, d)
+    `${Int.toString(n / g)}⁄${Int.toString(d / g)}`
+  }
+
+  // Exact values of sin/cos/tan at the special angles (Unicode: √ and fraction slash)
+  let sinVals = [(0, "0"), (30, "1⁄2"), (45, "√2⁄2"), (60, "√3⁄2"), (90, "1")]
+  let cosVals = [(0, "1"), (30, "√3⁄2"), (45, "√2⁄2"), (60, "1⁄2"), (90, "0")]
+  let tanVals = [(0, "0"), (30, "√3⁄3"), (45, "1"), (60, "√3"), (90, "undefined")]
+
+  let specialProblem = (fname: string, table: array<(int, string)>): problem => {
+    let (angle, value) = pick(table)
+    horiz(`${fname}(${Int.toString(angle)}°) = ____`, value)
+  }
+
+  // Degree <-> radian pairs for the special/quadrantal angles (Unicode π)
+  let radTable = [
+    (30, "π⁄6"),
+    (45, "π⁄4"),
+    (60, "π⁄3"),
+    (90, "π⁄2"),
+    (120, "2π⁄3"),
+    (135, "3π⁄4"),
+    (150, "5π⁄6"),
+    (180, "π"),
+    (210, "7π⁄6"),
+    (225, "5π⁄4"),
+    (240, "4π⁄3"),
+    (270, "3π⁄2"),
+    (300, "5π⁄3"),
+    (315, "7π⁄4"),
+    (330, "11π⁄6"),
+    (360, "2π"),
+  ]
+
+  // Pythagorean triples -> whole-number / exact answers without a calculator
+  let triples = [(3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25), (6, 8, 10), (9, 12, 15), (20, 21, 29)]
+
+  // SOH-CAH-TOA: reveal the two relevant sides and ask for the ratio as a fraction
+  let sohProblem = (fname: string): problem => {
+    let (opp, adj, hyp) = pick(triples)
+    let (desc, n, d) = switch fname {
+    | "cos" => (
+        `the side adjacent to θ is ${Int.toString(adj)} and the hypotenuse is ${Int.toString(hyp)}`,
+        adj,
+        hyp,
+      )
+    | "tan" => (
+        `the side opposite θ is ${Int.toString(opp)} and the side adjacent to θ is ${Int.toString(adj)}`,
+        opp,
+        adj,
+      )
+    | _ => (
+        `the side opposite θ is ${Int.toString(opp)} and the hypotenuse is ${Int.toString(hyp)}`,
+        opp,
+        hyp,
+      )
+    }
+    horiz(`In a right triangle, ${desc}. Write ${fname} θ as a fraction. ____`, frac(n, d))
+  }
+
+  switch op {
+  | SineSpecial => specialProblem("sin", sinVals)
+  | CosineSpecial => specialProblem("cos", cosVals)
+  | TangentSpecial => specialProblem("tan", tanVals)
+  | MixedSpecial => {
+      let (fname, table) = pick([("sin", sinVals), ("cos", cosVals), ("tan", tanVals)])
+      specialProblem(fname, table)
+    }
+
+  | ReferenceAngle => {
+      let refAngles = [
+        (120, 60),
+        (135, 45),
+        (150, 30),
+        (210, 30),
+        (225, 45),
+        (240, 60),
+        (300, 60),
+        (315, 45),
+        (330, 30),
+      ]
+      let (angle, ref) = pick(refAngles)
+      horiz(`Find the reference angle:  ${Int.toString(angle)}° = ____`, `${Int.toString(ref)}°`)
+    }
+
+  | CoterminalAngle => {
+      let bases = [30, 45, 60, 90, 120, 135, 150, 210, 225, 240, 300, 315, 330]
+      let base = pick(bases)
+      let k = pick([1, 2, -1])
+      let shown = base + 360 * k
+      horiz(
+        `Find a coterminal angle in [0°, 360°):  ${Int.toString(shown)}° = ____`,
+        `${Int.toString(base)}°`,
+      )
+    }
+
+  | QuadrantIdentify => {
+      let angles = [
+        (20, "I"),
+        (75, "I"),
+        (100, "II"),
+        (125, "II"),
+        (160, "II"),
+        (200, "III"),
+        (215, "III"),
+        (245, "III"),
+        (290, "IV"),
+        (310, "IV"),
+        (340, "IV"),
+      ]
+      let (angle, quadrant) = pick(angles)
+      horiz(`In which quadrant does ${Int.toString(angle)}° lie? ____`, quadrant)
+    }
+
+  | DegreesToRadians => {
+      let (deg, rad) = pick(radTable)
+      horiz(`Convert to radians:  ${Int.toString(deg)}° = ____`, rad)
+    }
+
+  | RadiansToDegrees => {
+      let (deg, rad) = pick(radTable)
+      horiz(`Convert to degrees:  ${rad} = ____`, `${Int.toString(deg)}°`)
+    }
+
+  | SohCahToaSine => sohProblem("sin")
+  | SohCahToaCosine => sohProblem("cos")
+  | SohCahToaTangent => sohProblem("tan")
+  | SohCahToaMixed => sohProblem(pick(["sin", "cos", "tan"]))
+  | NameTheRatio => {
+      let (desc, name) = pick([
+        ("opposite ⁄ hypotenuse", "sin"),
+        ("adjacent ⁄ hypotenuse", "cos"),
+        ("opposite ⁄ adjacent", "tan"),
+      ])
+      horiz(`Which ratio equals ${desc} ?  (sin, cos, or tan) ____`, name)
+    }
+
+  | PythagoreanHypotenuse => {
+      let (x, y, c) = pick(triples)
+      // Randomly order the two legs for variety
+      let (a, b) = randomInt(0, 1) == 0 ? (x, y) : (y, x)
+      horiz(
+        `A right triangle has legs a = ${Int.toString(a)} and b = ${Int.toString(b)}. Find the hypotenuse c.  (a² + b² = c²) ____`,
+        Int.toString(c),
+      )
+    }
+
+  | PythagoreanLeg => {
+      let (x, y, c) = pick(triples)
+      // Give the hypotenuse and one leg, ask for the other
+      let (known, missing) = randomInt(0, 1) == 0 ? (x, y) : (y, x)
+      horiz(
+        `A right triangle has hypotenuse ${Int.toString(c)} and one leg ${Int.toString(known)}. Find the other leg. ____`,
+        Int.toString(missing),
+      )
+    }
+  }
+}
+
 // Main generate function
 let generate = (config: skillConfig): problem => {
   switch config.operation {
@@ -2980,6 +3168,7 @@ let generate = (config: skillConfig): problem => {
   | ThirdGradeOperation(op) => generateThirdGradeProblem(op, config)
   | FourthGradeOperation(op) => generateFourthGradeProblem(op, config)
   | FifthGradeOperation(op) => generateFifthGradeProblem(op, config)
+  | TrigonometryOperation(op) => generateTrigonometryProblem(op, config)
   }
 }
 

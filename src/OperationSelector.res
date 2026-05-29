@@ -138,6 +138,23 @@ let operationToValue = (op: option<Problem.operation>): string => {
   | Some(Problem.FifthGradeOperation(FifthGrade.VolumeRectangularPrism)) => "volumerectangularprism"
   | Some(Problem.FifthGradeOperation(FifthGrade.VolumeCube)) => "volumecube"
   | Some(Problem.FifthGradeOperation(FifthGrade.VolumeComposite)) => "volumecomposite"
+  // Trigonometry operations
+  | Some(Problem.TrigonometryOperation(Trigonometry.SineSpecial)) => "sinespecial"
+  | Some(Problem.TrigonometryOperation(Trigonometry.CosineSpecial)) => "cosinespecial"
+  | Some(Problem.TrigonometryOperation(Trigonometry.TangentSpecial)) => "tangentspecial"
+  | Some(Problem.TrigonometryOperation(Trigonometry.MixedSpecial)) => "mixedspecial"
+  | Some(Problem.TrigonometryOperation(Trigonometry.ReferenceAngle)) => "referenceangle"
+  | Some(Problem.TrigonometryOperation(Trigonometry.CoterminalAngle)) => "coterminalangle"
+  | Some(Problem.TrigonometryOperation(Trigonometry.QuadrantIdentify)) => "quadrantidentify"
+  | Some(Problem.TrigonometryOperation(Trigonometry.DegreesToRadians)) => "degreestoradians"
+  | Some(Problem.TrigonometryOperation(Trigonometry.RadiansToDegrees)) => "radianstodegrees"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaSine)) => "sohcahtoasine"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaCosine)) => "sohcahtoacosine"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaTangent)) => "sohcahtoatangent"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaMixed)) => "sohcahtoamixed"
+  | Some(Problem.TrigonometryOperation(Trigonometry.NameTheRatio)) => "nametheratio"
+  | Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanHypotenuse)) => "pythagoreanhypotenuse"
+  | Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanLeg)) => "pythagoreanleg"
   | None => ""
   }
 }
@@ -213,6 +230,29 @@ let valueToFifthGradeOperation = (value: string): option<Problem.operation> => {
   | "volumerectangularprism" => Some(Problem.FifthGradeOperation(FifthGrade.VolumeRectangularPrism))
   | "volumecube" => Some(Problem.FifthGradeOperation(FifthGrade.VolumeCube))
   | "volumecomposite" => Some(Problem.FifthGradeOperation(FifthGrade.VolumeComposite))
+  | _ => None
+  }
+}
+
+// Convert value to Trigonometry operation
+let valueToTrigonometryOperation = (value: string): option<Problem.operation> => {
+  switch value {
+  | "sinespecial" => Some(Problem.TrigonometryOperation(Trigonometry.SineSpecial))
+  | "cosinespecial" => Some(Problem.TrigonometryOperation(Trigonometry.CosineSpecial))
+  | "tangentspecial" => Some(Problem.TrigonometryOperation(Trigonometry.TangentSpecial))
+  | "mixedspecial" => Some(Problem.TrigonometryOperation(Trigonometry.MixedSpecial))
+  | "referenceangle" => Some(Problem.TrigonometryOperation(Trigonometry.ReferenceAngle))
+  | "coterminalangle" => Some(Problem.TrigonometryOperation(Trigonometry.CoterminalAngle))
+  | "quadrantidentify" => Some(Problem.TrigonometryOperation(Trigonometry.QuadrantIdentify))
+  | "degreestoradians" => Some(Problem.TrigonometryOperation(Trigonometry.DegreesToRadians))
+  | "radianstodegrees" => Some(Problem.TrigonometryOperation(Trigonometry.RadiansToDegrees))
+  | "sohcahtoasine" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaSine))
+  | "sohcahtoacosine" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaCosine))
+  | "sohcahtoatangent" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaTangent))
+  | "sohcahtoamixed" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaMixed))
+  | "nametheratio" => Some(Problem.TrigonometryOperation(Trigonometry.NameTheRatio))
+  | "pythagoreanhypotenuse" => Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanHypotenuse))
+  | "pythagoreanleg" => Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanLeg))
   | _ => None
   }
 }
@@ -315,20 +355,21 @@ let valueToThirdGradeOperation = (value: string): option<Problem.operation> => {
 
 @react.component
 let make = (
-  ~grade: option<Problem.grade>,
+  ~course: option<Problem.course>,
   ~category: option<Problem.category>,
   ~value: option<Problem.operation>,
   ~onChange: option<Problem.operation> => unit,
 ) => {
   let handleChange = (e: ReactEvent.Form.t) => {
     let v = ReactEvent.Form.target(e)["value"]
-    switch grade {
+    switch course {
     | Some(Problem.KindergartenGrade) => onChange(valueToKindergartenOperation(v))
     | Some(Problem.FirstGrade) => onChange(valueToFirstGradeOperation(v))
     | Some(Problem.SecondGrade) => onChange(valueToSecondGradeOperation(v))
     | Some(Problem.ThirdGrade) => onChange(valueToThirdGradeOperation(v))
     | Some(Problem.FourthGrade) => onChange(valueToFourthGradeOperation(v))
     | Some(Problem.FifthGrade) => onChange(valueToFifthGradeOperation(v))
+    | Some(Problem.TrigonometryGrade) => onChange(valueToTrigonometryOperation(v))
     | None => ()
     }
   }

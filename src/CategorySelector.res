@@ -47,13 +47,18 @@ let categoryToValue = (cat: option<Problem.category>): string => {
   | Some(Problem.FifthGradeCategory(FifthGrade.Exponents)) => "exponents"
   | Some(Problem.FifthGradeCategory(FifthGrade.OrderOfOperations)) => "orderofoperations"
   | Some(Problem.FifthGradeCategory(FifthGrade.Volume)) => "volume"
+  // Trigonometry
+  | Some(Problem.TrigonometryCategory(Trigonometry.SpecialAngles)) => "specialangles"
+  | Some(Problem.TrigonometryCategory(Trigonometry.Angles)) => "angles"
+  | Some(Problem.TrigonometryCategory(Trigonometry.SohCahToa)) => "sohcahtoa"
+  | Some(Problem.TrigonometryCategory(Trigonometry.RightTriangle)) => "righttriangle"
   | None => ""
   }
 }
 
-// Convert value to category based on grade
-let valueToCategory = (grade: Problem.grade, value: string): option<Problem.category> => {
-  switch (grade, value) {
+// Convert value to category based on course
+let valueToCategory = (course: Problem.course, value: string): option<Problem.category> => {
+  switch (course, value) {
   // Kindergarten
   | (Problem.KindergartenGrade, "counting") => Some(Problem.KindergartenCategory(Kindergarten.Counting))
   | (Problem.KindergartenGrade, "comparing") => Some(Problem.KindergartenCategory(Kindergarten.Comparing))
@@ -98,26 +103,31 @@ let valueToCategory = (grade: Problem.grade, value: string): option<Problem.cate
   | (Problem.FifthGrade, "exponents") => Some(Problem.FifthGradeCategory(FifthGrade.Exponents))
   | (Problem.FifthGrade, "orderofoperations") => Some(Problem.FifthGradeCategory(FifthGrade.OrderOfOperations))
   | (Problem.FifthGrade, "volume") => Some(Problem.FifthGradeCategory(FifthGrade.Volume))
+  // Trigonometry
+  | (Problem.TrigonometryGrade, "specialangles") => Some(Problem.TrigonometryCategory(Trigonometry.SpecialAngles))
+  | (Problem.TrigonometryGrade, "angles") => Some(Problem.TrigonometryCategory(Trigonometry.Angles))
+  | (Problem.TrigonometryGrade, "sohcahtoa") => Some(Problem.TrigonometryCategory(Trigonometry.SohCahToa))
+  | (Problem.TrigonometryGrade, "righttriangle") => Some(Problem.TrigonometryCategory(Trigonometry.RightTriangle))
   | _ => None
   }
 }
 
 @react.component
 let make = (
-  ~grade: option<Problem.grade>,
+  ~course: option<Problem.course>,
   ~value: option<Problem.category>,
   ~onChange: option<Problem.category> => unit,
 ) => {
   let handleChange = (e: ReactEvent.Form.t) => {
     let v = ReactEvent.Form.target(e)["value"]
-    switch grade {
+    switch course {
     | Some(g) => onChange(valueToCategory(g, v))
     | None => ()
     }
   }
 
   let renderOptions = () => {
-    switch grade {
+    switch course {
     | Some(Problem.KindergartenGrade) =>
       <>
         <option value="counting"> {React.string("Counting")} </option>
@@ -174,11 +184,18 @@ let make = (
         <option value="orderofoperations"> {React.string("Order of Operations")} </option>
         <option value="volume"> {React.string("Volume")} </option>
       </>
+    | Some(Problem.TrigonometryGrade) =>
+      <>        
+        <option value="angles"> {React.string("Angles")} </option>
+        <option value="sohcahtoa"> {React.string("SOH-CAH-TOA")} </option>
+        <option value="righttriangle"> {React.string("Right Triangles")} </option>
+        <option value="specialangles"> {React.string("Special Angles")} </option>
+      </>
     | None => React.null
     }
   }
 
-  switch grade {
+  switch course {
   | Some(_) =>
     <div className="form-group">
       <label className="form-label"> {React.string("Category")} </label>

@@ -1,5 +1,10 @@
 # Revision history for free-math-sheets
 
+## 0.3.0 -- 2026-05-29
+
+* Add Trigonometry course with angles, SOH-CAH-TOA, special angles, etc.
+* Update the label grade to course.
+
 ## 0.2.0 -- 2026-02-26
 
 * Update license to AGPL-3.0.
