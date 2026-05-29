@@ -7,6 +7,7 @@
 type category =
   | SpecialAngles
   | Angles
+  | SohCahToa
   | RightTriangle
 
 // Operations within each category
@@ -22,10 +23,15 @@ type operation =
   | QuadrantIdentify    // Identify the quadrant of an angle
   | DegreesToRadians    // Convert special angle degrees to radians
   | RadiansToDegrees    // Convert radians to degrees
-  // Right triangle (Pythagorean triples -> whole-number/exact answers)
+  // SOH-CAH-TOA (write a trig ratio as a fraction from labeled sides)
+  | SohCahToaSine       // sin = opposite / hypotenuse
+  | SohCahToaCosine     // cos = adjacent / hypotenuse
+  | SohCahToaTangent    // tan = opposite / adjacent
+  | SohCahToaMixed      // any of the three
+  | NameTheRatio        // name the ratio matching a sides description
+  // Right triangle (Pythagorean triples -> whole-number answers)
   | PythagoreanHypotenuse // Find the hypotenuse from two legs
   | PythagoreanLeg        // Find a missing leg from hypotenuse and a leg
-  | TrigRatioFromSides    // Find sin/cos/tan as a fraction from labeled sides
 
 // What type of config an operation needs
 type configType =
@@ -36,6 +42,7 @@ let categoryToString = (category: category): string => {
   switch category {
   | SpecialAngles => "Special Angles"
   | Angles => "Angles"
+  | SohCahToa => "SOH-CAH-TOA"
   | RightTriangle => "Right Triangles"
   }
 }
@@ -51,15 +58,19 @@ let operationToString = (operation: operation): string => {
   | QuadrantIdentify => "Identify the Quadrant"
   | DegreesToRadians => "Degrees to Radians"
   | RadiansToDegrees => "Radians to Degrees"
+  | SohCahToaSine => "Sine (opposite / hypotenuse)"
+  | SohCahToaCosine => "Cosine (adjacent / hypotenuse)"
+  | SohCahToaTangent => "Tangent (opposite / adjacent)"
+  | SohCahToaMixed => "Mixed Ratios from Sides"
+  | NameTheRatio => "Name the Ratio"
   | PythagoreanHypotenuse => "Find the Hypotenuse"
   | PythagoreanLeg => "Find a Missing Leg"
-  | TrigRatioFromSides => "Trig Ratios from Sides"
   }
 }
 
 // Get all categories
 let getCategories = (): array<category> => {
-  [SpecialAngles, Angles, RightTriangle]
+  [SpecialAngles, Angles, SohCahToa, RightTriangle]
 }
 
 // Get operations for a category
@@ -67,7 +78,8 @@ let getOperationsForCategory = (category: category): array<operation> => {
   switch category {
   | SpecialAngles => [SineSpecial, CosineSpecial, TangentSpecial, MixedSpecial]
   | Angles => [ReferenceAngle, CoterminalAngle, QuadrantIdentify, DegreesToRadians, RadiansToDegrees]
-  | RightTriangle => [PythagoreanHypotenuse, PythagoreanLeg, TrigRatioFromSides]
+  | SohCahToa => [SohCahToaSine, SohCahToaCosine, SohCahToaTangent, SohCahToaMixed, NameTheRatio]
+  | RightTriangle => [PythagoreanHypotenuse, PythagoreanLeg]
   }
 }
 

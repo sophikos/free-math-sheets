@@ -60,6 +60,9 @@ let buildWorksheetPdf = (worksheet: worksheet): JsPdf.t => {
     format: #letter,
   })
 
+  // Register the embedded Unicode math font for sqrt/pi/theta/fraction rendering
+  let _ = pdf->JsPdf.registerMathFont
+
   // Set document metadata (title appears as filename in some PDF viewers)
   let filename = worksheet.title->String.replaceAll(" ", "_") ++ ".pdf"
   let _ = pdf->JsPdf.setDocumentProperties({
@@ -173,8 +176,9 @@ let buildWorksheetPdf = (worksheet: worksheet): JsPdf.t => {
         }
       | None => {
           // Fallback to horizontal display string with text wrapping
+          // Use the embedded Unicode font so math glyphs (sqrt, pi, theta, etc.) render
           let _ = pdf->JsPdf.setFontSize(12)
-          let _ = pdf->JsPdf.setFont("times", "normal")
+          let _ = pdf->JsPdf.setFont(JsPdf.mathFontName, "normal")
           switch problem.horizontalDisplay {
           | Some(display) => {
               // Wrap text to fit within column (leaving margin for problem number)
@@ -227,6 +231,9 @@ let buildAnswerKeyPdf = (worksheet: worksheet): JsPdf.t => {
     format: #letter,
   })
 
+  // Register the embedded Unicode math font for sqrt/pi/theta/fraction rendering
+  let _ = pdf->JsPdf.registerMathFont
+
   // Set document metadata
   let filename = worksheet.title->String.replaceAll(" ", "_") ++ "_Answer_Key.pdf"
   let _ = pdf->JsPdf.setDocumentProperties({
@@ -265,7 +272,8 @@ let buildAnswerKeyPdf = (worksheet: worksheet): JsPdf.t => {
 
     let _ = pdf->JsPdf.setFont("times", "bold")
     let _ = pdf->JsPdf.text(`${Int.toString(idx + 1)}.`, xPos, yPos)
-    let _ = pdf->JsPdf.setFont("times", "normal")
+    // Embedded Unicode font so answers with sqrt/pi/theta/fractions render
+    let _ = pdf->JsPdf.setFont(JsPdf.mathFontName, "normal")
     let _ = pdf->JsPdf.text(problem.answer, xPos +. 8.0, yPos)
   })
 

@@ -148,9 +148,13 @@ let operationToValue = (op: option<Problem.operation>): string => {
   | Some(Problem.TrigonometryOperation(Trigonometry.QuadrantIdentify)) => "quadrantidentify"
   | Some(Problem.TrigonometryOperation(Trigonometry.DegreesToRadians)) => "degreestoradians"
   | Some(Problem.TrigonometryOperation(Trigonometry.RadiansToDegrees)) => "radianstodegrees"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaSine)) => "sohcahtoasine"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaCosine)) => "sohcahtoacosine"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaTangent)) => "sohcahtoatangent"
+  | Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaMixed)) => "sohcahtoamixed"
+  | Some(Problem.TrigonometryOperation(Trigonometry.NameTheRatio)) => "nametheratio"
   | Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanHypotenuse)) => "pythagoreanhypotenuse"
   | Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanLeg)) => "pythagoreanleg"
-  | Some(Problem.TrigonometryOperation(Trigonometry.TrigRatioFromSides)) => "trigratiofromsides"
   | None => ""
   }
 }
@@ -242,9 +246,13 @@ let valueToTrigonometryOperation = (value: string): option<Problem.operation> =>
   | "quadrantidentify" => Some(Problem.TrigonometryOperation(Trigonometry.QuadrantIdentify))
   | "degreestoradians" => Some(Problem.TrigonometryOperation(Trigonometry.DegreesToRadians))
   | "radianstodegrees" => Some(Problem.TrigonometryOperation(Trigonometry.RadiansToDegrees))
+  | "sohcahtoasine" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaSine))
+  | "sohcahtoacosine" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaCosine))
+  | "sohcahtoatangent" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaTangent))
+  | "sohcahtoamixed" => Some(Problem.TrigonometryOperation(Trigonometry.SohCahToaMixed))
+  | "nametheratio" => Some(Problem.TrigonometryOperation(Trigonometry.NameTheRatio))
   | "pythagoreanhypotenuse" => Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanHypotenuse))
   | "pythagoreanleg" => Some(Problem.TrigonometryOperation(Trigonometry.PythagoreanLeg))
-  | "trigratiofromsides" => Some(Problem.TrigonometryOperation(Trigonometry.TrigRatioFromSides))
   | _ => None
   }
 }

@@ -50,6 +50,7 @@ let categoryToValue = (cat: option<Problem.category>): string => {
   // Trigonometry
   | Some(Problem.TrigonometryCategory(Trigonometry.SpecialAngles)) => "specialangles"
   | Some(Problem.TrigonometryCategory(Trigonometry.Angles)) => "angles"
+  | Some(Problem.TrigonometryCategory(Trigonometry.SohCahToa)) => "sohcahtoa"
   | Some(Problem.TrigonometryCategory(Trigonometry.RightTriangle)) => "righttriangle"
   | None => ""
   }
@@ -105,6 +106,7 @@ let valueToCategory = (grade: Problem.grade, value: string): option<Problem.cate
   // Trigonometry
   | (Problem.TrigonometryGrade, "specialangles") => Some(Problem.TrigonometryCategory(Trigonometry.SpecialAngles))
   | (Problem.TrigonometryGrade, "angles") => Some(Problem.TrigonometryCategory(Trigonometry.Angles))
+  | (Problem.TrigonometryGrade, "sohcahtoa") => Some(Problem.TrigonometryCategory(Trigonometry.SohCahToa))
   | (Problem.TrigonometryGrade, "righttriangle") => Some(Problem.TrigonometryCategory(Trigonometry.RightTriangle))
   | _ => None
   }
@@ -186,6 +188,7 @@ let make = (
       <>
         <option value="specialangles"> {React.string("Special Angles")} </option>
         <option value="angles"> {React.string("Angles")} </option>
+        <option value="sohcahtoa"> {React.string("SOH-CAH-TOA")} </option>
         <option value="righttriangle"> {React.string("Right Triangles")} </option>
       </>
     | None => React.null

@@ -2998,44 +2998,67 @@ let generateTrigonometryProblem = (op: Trigonometry.operation, _config: skillCon
   // Pick a random element from a non-empty array
   let pick = arr => arr->Array.getUnsafe(randomInt(0, Array.length(arr) - 1))
 
-  // Reduced fraction as a string, e.g. (6, 10) => "3/5"
+  // Reduced fraction as a string using the Unicode fraction slash, e.g. (6, 10) => "3⁄5"
   let frac = (n: int, d: int): string => {
     let g = gcd(n, d)
-    `${Int.toString(n / g)}/${Int.toString(d / g)}`
+    `${Int.toString(n / g)}⁄${Int.toString(d / g)}`
   }
 
-  // Exact values of sin/cos/tan at the special angles (ASCII so they print)
-  let sinVals = [(0, "0"), (30, "1/2"), (45, "sqrt(2)/2"), (60, "sqrt(3)/2"), (90, "1")]
-  let cosVals = [(0, "1"), (30, "sqrt(3)/2"), (45, "sqrt(2)/2"), (60, "1/2"), (90, "0")]
-  let tanVals = [(0, "0"), (30, "sqrt(3)/3"), (45, "1"), (60, "sqrt(3)"), (90, "undefined")]
+  // Exact values of sin/cos/tan at the special angles (Unicode: √ and fraction slash)
+  let sinVals = [(0, "0"), (30, "1⁄2"), (45, "√2⁄2"), (60, "√3⁄2"), (90, "1")]
+  let cosVals = [(0, "1"), (30, "√3⁄2"), (45, "√2⁄2"), (60, "1⁄2"), (90, "0")]
+  let tanVals = [(0, "0"), (30, "√3⁄3"), (45, "1"), (60, "√3"), (90, "undefined")]
 
   let specialProblem = (fname: string, table: array<(int, string)>): problem => {
     let (angle, value) = pick(table)
     horiz(`${fname}(${Int.toString(angle)}°) = ____`, value)
   }
 
-  // Degree <-> radian pairs for the special/quadrantal angles
+  // Degree <-> radian pairs for the special/quadrantal angles (Unicode π)
   let radTable = [
-    (30, "pi/6"),
-    (45, "pi/4"),
-    (60, "pi/3"),
-    (90, "pi/2"),
-    (120, "2pi/3"),
-    (135, "3pi/4"),
-    (150, "5pi/6"),
-    (180, "pi"),
-    (210, "7pi/6"),
-    (225, "5pi/4"),
-    (240, "4pi/3"),
-    (270, "3pi/2"),
-    (300, "5pi/3"),
-    (315, "7pi/4"),
-    (330, "11pi/6"),
-    (360, "2pi"),
+    (30, "π⁄6"),
+    (45, "π⁄4"),
+    (60, "π⁄3"),
+    (90, "π⁄2"),
+    (120, "2π⁄3"),
+    (135, "3π⁄4"),
+    (150, "5π⁄6"),
+    (180, "π"),
+    (210, "7π⁄6"),
+    (225, "5π⁄4"),
+    (240, "4π⁄3"),
+    (270, "3π⁄2"),
+    (300, "5π⁄3"),
+    (315, "7π⁄4"),
+    (330, "11π⁄6"),
+    (360, "2π"),
   ]
 
   // Pythagorean triples -> whole-number / exact answers without a calculator
   let triples = [(3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25), (6, 8, 10), (9, 12, 15), (20, 21, 29)]
+
+  // SOH-CAH-TOA: reveal the two relevant sides and ask for the ratio as a fraction
+  let sohProblem = (fname: string): problem => {
+    let (opp, adj, hyp) = pick(triples)
+    let (desc, n, d) = switch fname {
+    | "cos" => (
+        `the side adjacent to θ is ${Int.toString(adj)} and the hypotenuse is ${Int.toString(hyp)}`,
+        adj,
+        hyp,
+      )
+    | "tan" => (
+        `the side opposite θ is ${Int.toString(opp)} and the side adjacent to θ is ${Int.toString(adj)}`,
+        opp,
+        adj,
+      )
+    | _ => (
+        `the side opposite θ is ${Int.toString(opp)} and the hypotenuse is ${Int.toString(hyp)}`,
+        opp,
+        hyp,
+      )
+    }
+    horiz(`In a right triangle, ${desc}. Write ${fname} θ as a fraction. ____`, frac(n, d))
+  }
 
   switch op {
   | SineSpecial => specialProblem("sin", sinVals)
@@ -3101,12 +3124,25 @@ let generateTrigonometryProblem = (op: Trigonometry.operation, _config: skillCon
       horiz(`Convert to degrees:  ${rad} = ____`, `${Int.toString(deg)}°`)
     }
 
+  | SohCahToaSine => sohProblem("sin")
+  | SohCahToaCosine => sohProblem("cos")
+  | SohCahToaTangent => sohProblem("tan")
+  | SohCahToaMixed => sohProblem(pick(["sin", "cos", "tan"]))
+  | NameTheRatio => {
+      let (desc, name) = pick([
+        ("opposite ⁄ hypotenuse", "sin"),
+        ("adjacent ⁄ hypotenuse", "cos"),
+        ("opposite ⁄ adjacent", "tan"),
+      ])
+      horiz(`Which ratio equals ${desc} ?  (sin, cos, or tan) ____`, name)
+    }
+
   | PythagoreanHypotenuse => {
       let (x, y, c) = pick(triples)
       // Randomly order the two legs for variety
       let (a, b) = randomInt(0, 1) == 0 ? (x, y) : (y, x)
       horiz(
-        `A right triangle has legs a = ${Int.toString(a)} and b = ${Int.toString(b)}. Find the hypotenuse c. ____`,
+        `A right triangle has legs a = ${Int.toString(a)} and b = ${Int.toString(b)}. Find the hypotenuse c.  (a² + b² = c²) ____`,
         Int.toString(c),
       )
     }
@@ -3118,17 +3154,6 @@ let generateTrigonometryProblem = (op: Trigonometry.operation, _config: skillCon
       horiz(
         `A right triangle has hypotenuse ${Int.toString(c)} and one leg ${Int.toString(known)}. Find the other leg. ____`,
         Int.toString(missing),
-      )
-    }
-
-  | TrigRatioFromSides => {
-      let (opp, adj, hyp) = pick(triples)
-      let (fname, n, d) = pick([("sin", opp, hyp), ("cos", adj, hyp), ("tan", opp, adj)])
-      horiz(
-        `In a right triangle, the side opposite angle θ is ${Int.toString(opp)}, the adjacent side is ${Int.toString(
-            adj,
-          )}, and the hypotenuse is ${Int.toString(hyp)}. Find ${fname} θ. ____`,
-        frac(n, d),
       )
     }
   }
