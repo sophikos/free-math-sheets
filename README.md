@@ -4,6 +4,12 @@
 
 This project only has a frontend. There is no backend as no user data it stored. The PDFs are generated using frontend tools.
 
+### Screenshots
+
+![Homepage](./homepage.png)
+
+![Homepage with example sheet](./homepage-with-pdf.png)
+
 ## How to generate Math Worksheets with Free Math Sheets
 
 The left hand side has an editor.
@@ -27,6 +33,15 @@ npm run dev
 ```
 
 Now it is hosted in localhost and you can access it in your web browser.
+
+## How to deploy
+
+Install docker
+
+```bash
+make build
+make up
+```
 
 # Numerikos
 
